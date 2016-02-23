@@ -1,5 +1,4 @@
 
-
 /// newUser - when a new user joins
 function newUser(nickname, users, currRoom){
   if( users[nickname] === undefined ) {

@@ -12,6 +12,9 @@ Real time web chat
 ### SERVER SIDE
 ![server-side-events](assets/server-events.jpg)
 
+### EVENT FLOW
+![event-flow](assets/event-flow.jpg)
+
 ## SAMPLE DATA STRUCTURE (within database)
 ```JSON
 {

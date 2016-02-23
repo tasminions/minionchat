@@ -23,7 +23,6 @@ Real time web chat
             "rooms":["room1","room2"]
         }
     },
-    "rooms": ["ijcwai"],
     "messages": {
         "room1": [
             {
@@ -31,7 +30,9 @@ Real time web chat
                 "body":"here is a message",
                 "time":"24-01-2016:12.123321321312"
             }
-        ]
+        ],
+        "room2":[],
+        "room3":[]
     }
 }
 ```

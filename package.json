@@ -21,7 +21,12 @@
     "wrapping-tape": "0.0.3"
   },
   "dependencies": {
+    "env2": "^2.0.6",
     "redis": "^2.4.2",
     "socket.io": "^1.4.5"
+  },
+  "jshintConfig": {
+    "esnext": true,
+    "asi": true
   }
 }

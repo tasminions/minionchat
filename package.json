@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/tasminions/minionchat#readme",
   "devDependencies": {
+    "codecov": "^1.0.1",
+    "istanbul": "^0.4.2",
     "nodemon": "^1.9.0",
     "wrapping-tape": "0.0.3"
   },

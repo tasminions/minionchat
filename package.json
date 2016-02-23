@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./server/app.js",
     "nodemon": "nodemon ./server/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tape ./test/*"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "homepage": "https://github.com/tasminions/minionchat#readme",
   "devDependencies": {
     "nodemon": "^1.9.0",
+    "tape": "^4.4.0",
     "wrapping-tape": "0.0.3"
   },
   "dependencies": {

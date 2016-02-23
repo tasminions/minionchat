@@ -4,6 +4,8 @@
   "description": "Simple chat service using sockets and Redis",
   "main": "index.js",
   "scripts": {
+    "start": "node ./server/app.js",
+    "nodemon": "nodemon ./server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,7 +23,12 @@
     "wrapping-tape": "0.0.3"
   },
   "dependencies": {
+    "env2": "^2.0.6",
     "redis": "^2.4.2",
     "socket.io": "^1.4.5"
+  },
+  "jshintConfig": {
+    "esnext": true,
+    "asi": true
   }
 }

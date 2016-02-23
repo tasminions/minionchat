@@ -4,7 +4,7 @@
   "description": "Simple chat service using sockets and Redis",
   "main": "index.js",
   "scripts": {
-    "test": "node test/*"
+    "test": "tape ./test/*"
   },
   "repository": {
     "type": "git",

@@ -4,7 +4,7 @@
   "description": "Simple chat service using sockets and Redis",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/*"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,7 @@
   "homepage": "https://github.com/tasminions/minionchat#readme",
   "devDependencies": {
     "nodemon": "^1.9.0",
+    "tape": "^4.4.0",
     "wrapping-tape": "0.0.3"
   },
   "dependencies": {

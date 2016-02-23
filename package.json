@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./server/app.js",
     "nodemon": "nodemon ./server/app.js",
-    "test": "tape ./test/*"
+    "test": "tape ./test/*",
+    "cover": "node ./node_modules/.bin/istanbul cover tape ./tests/*.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,8 @@
   },
   "homepage": "https://github.com/tasminions/minionchat#readme",
   "devDependencies": {
+    "codecov": "^1.0.1",
+    "istanbul": "^0.4.2",
     "nodemon": "^1.9.0",
     "tape": "^4.4.0",
     "wrapping-tape": "0.0.3"

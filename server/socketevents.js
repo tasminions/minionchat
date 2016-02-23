@@ -1,9 +1,8 @@
 
 
 /// newUser - when a new user joins
-
 function newUser(nickname, users, currRoom){
-  if(users[nickname] === undefined) {
+  if( users[nickname] === undefined ) {
     users[nickname] = {
       "rooms": [currRoom]
     };
@@ -11,9 +10,10 @@ function newUser(nickname, users, currRoom){
   else {
     users[nickname].rooms.push(currRoom);
   }
-
   return users;
 }
+
+
 
 module.exports = {
   newUser: newUser

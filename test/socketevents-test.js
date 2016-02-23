@@ -1,11 +1,12 @@
 var tape = require('tape');
-var socketlisten = require('../server/socketlisten.js');
+var socketevents = require('../server/socketevents.js');
 
-tape('function newUser should take the following parameters: usersObj, current-username and current-room, and return a newUsersObj (object type)',function(t){
+tape('function newUser should take the following parameters: users,'+
+    ' current-username and current-room, and return a newUsersObj (object type)',function(t){
     var nickname = 'bugs bunny';
     var currRoom = 'looneys';
     var users = {};
-    var actual = socketlisten.newUser(nickname,users,currRoom) instanceof Object;
+    var actual = socketevents.newUser(nickname,users,currRoom) instanceof Object;
     t.ok(actual,'newUser returns an object');
     t.end();
 });
@@ -19,7 +20,7 @@ tape('test that newUser returns the right filestructure',function(t){
           "rooms": ["looneys"]
       }
     };
-    var expected = socketlisten.newUser(nickname,users,currRoom);
+    var expected = socketevents.newUser(nickname,users,currRoom);
     t.deepEqual(expected, result, 'newUser returns an object');
     t.end();
 });
@@ -38,7 +39,7 @@ tape('test that newUser returns the right filestructure',function(t){
           "rooms": ["looneys"]
         }
     };
-    var expected = socketlisten.newUser(nickname,users,currRoom);
+    var expected = socketevents.newUser(nickname,users,currRoom);
     t.deepEqual(expected, result, 'newUser returns an object');
     t.end();
 });
@@ -62,7 +63,9 @@ tape('test that newUser returns the right filestructure',function(t){
           "rooms": ["looneys"]
         }
     };
-    var expected = socketlisten.newUser(nickname,users,currRoom);
+    var expected = socketevents.newUser(nickname,users,currRoom);
     t.deepEqual(expected, result, 'newUser returns an object');
     t.end();
 });
+
+tape('function updateMessageHistory should take  ')

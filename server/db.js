@@ -17,7 +17,9 @@ function addMessage(client, username, room, message, time, callback){
     if(reply){
       client.sismember("users_in_" + room, username, function(error, reply){
         if(reply){
-          client.rpush("messages_in_" + room, JSON.stringify({sender: username, message: message, time: time}), callback)
+          client.rpush("messages_in_" + room, JSON.stringify({sender: username, message: message, time: time}), function(error, reply) {
+            client.ltrim(0, 99, callback)
+          })
         } else {
           console.log(username + " is not a member of room " + room);
         }

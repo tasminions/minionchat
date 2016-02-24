@@ -5,7 +5,7 @@ var client, test = {};
 
 test.module1 = tape({
   setup: function(t){
-    client = redis.createClient()
+    client = redis.createClient(process.env.REDIS_URL)
     client.select(1, function(){
       console.log("connected to database 1")
     })

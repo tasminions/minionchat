@@ -16,7 +16,9 @@ function router(req, res){
     console.log("ksjdbfajfbksdfhb");
 
   } else if(url.indexOf("/main/")>-1){
-    console.log("you are on the mainr oom");
+    console.log(url);
+    respondWithFile('/public/chat.html','html',res);
+    console.log("you are on the main room");
   }
     else {
     // 404

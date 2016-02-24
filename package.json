@@ -2,11 +2,11 @@
   "name": "minionchat",
   "version": "1.0.0",
   "description": "Simple chat service using sockets and Redis",
-  "main": "index.js",
+  "main": "./server/app.js",
   "scripts": {
     "start": "node ./server/app.js",
     "nodemon": "nodemon ./server/app.js",
-    "test": "tape ./test/*",
+    "test": "tape ./tests/*",
     "cover": "node ./node_modules/.bin/istanbul cover tape ./tests/*.js"
   },
   "repository": {

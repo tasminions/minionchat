@@ -6,16 +6,24 @@
     <link rel="stylesheet" href="/public/css/style.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
-    <h1 id="roomName"> </h1>
-    <p></p>
+    <div class="topbar">
+      <div class="topleft">
+        <h1 id="roomName"> </h1>
+      </div>
+      <div class="topright"> </div>
+    </div>
     <div class="sidebar">
       <ul id="activeUsers"> </ul>
     </div>
-    <ul id="allMessages"> </ul>
-    <form id="chatBox">
-      <input type="text" id="sendChat" placeholder="Type your message here" required>
-      <input type="submit">
-    </form>
+    <div class="main">
+      <ul id="allMessages"> </ul>
+    </div>
+    <div class="bottombar">
+      <form id="chatBox">
+        <textarea id="sendChat" rows="5" columns="50" placeholder="Type your message here" required autofocus></textarea>
+        <input type="submit" class="submit-btn" value="SEND">
+      </form>
+    </div>
     <script type="text/javascript" src="/public/js/socket.js"> </script>
     <!-- <script type="text/javascript" src="/public/js/sckt-events.js"></script> -->
     <script type="text/javascript" src="/public/js/script.js"></script>

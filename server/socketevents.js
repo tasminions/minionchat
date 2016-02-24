@@ -1,13 +1,12 @@
-var server = require('./server/app.js')
-var sckt = require('socket.io').listen(server);
 
-console.log(sckt);
+
+
+// console.log(sckt);
 // socket listener for user joining a room
-sckt.sockets.on('userJoin',function(nickname){
-  console.log(nickname);
-});
 
-/// newUser - when a new user joins
+
+
+// / newUser - when a new user joins
 function newUser(nickname, users, currRoom){
   if( users[nickname] === undefined ) {
     users[nickname] = {
@@ -22,6 +21,11 @@ function newUser(nickname, users, currRoom){
 
 
 
-module.exports = {
-  newUser: newUser
+module.exports = function(server) {
+  var sckt = require('socket.io')(server);
+  sckt.sockets.on("connection", function(socket){
+    socket.on('userJoin', function(nickname){
+    console.log(nickname);
+    });
+  });
 };

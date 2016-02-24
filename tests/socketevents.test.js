@@ -1,71 +1,66 @@
-var tape = require('tape');
-var socketevents = require('../server/socketevents.js');
+var http = require('http')
+var router = require('../server/router.js')
+var sck = require("../server/socketevents.js")
+var ioClient = require('socket.io-client')
+var tape = require('wrapping-tape')
+var port = process.env.PORT || 8080
 
-tape('function newUser should take the following parameters: users,'+
-    ' current-username and current-room, and return a newUsersObj (object type)',function(t){
-    var nickname = 'bugs bunny';
-    var currRoom = 'looneys';
-    var users = {};
-    var actual = socketevents.newUser(nickname,users,currRoom) instanceof Object;
-    t.ok(actual,'newUser returns an object');
-    t.end();
-});
+var server = http.createServer(router)
+var test = {}, socket0, socket1
 
-tape('test that newUser returns the right filestructure',function(t){
-    var nickname = 'bugs bunny';
-    var currRoom = 'looneys';
-    var users = {};
-    var result = {
-        "bugs bunny": {
-          "rooms": ["looneys"]
-      }
-    };
-    var expected = socketevents.newUser(nickname,users,currRoom);
-    t.deepEqual(expected, result, 'newUser returns an object');
-    t.end();
-});
 
-tape('test that newUser returns the right filestructure',function(t){
-    var nickname = 'bugs bunny';
-    var currRoom = 'looneys';
-    var users = {"daffy": {
-      "rooms": ["room1"]
-    } };
-    var result = {
-        "daffy": {
-          "rooms": ["room1"]
-        },
-        "bugs bunny": {
-          "rooms": ["looneys"]
-        }
-    };
-    var expected = socketevents.newUser(nickname,users,currRoom);
-    t.deepEqual(expected, result, 'newUser returns an object');
-    t.end();
-});
+test.module1 = tape({
+  setup: function(t){
+    server.listen(port, function(){
+      console.log("listening on port "+ port);
+      sck(server);
+    });
+    socket0 = ioClient.connect('http://localhost:' + port, {
+      'reconnection delay': 0,
+      'reopen delay': 0,
+      'force new connection': true
+    })
+    socket1 = ioClient.connect('http://localhost:' + port, {
+      'reconnection delay': 0,
+      'reopen delay': 0,
+      'force new connection': true
+    })
+    t.end()
+  },
 
-tape('test that newUser returns the right filestructure',function(t){
-    var nickname = 'daffy';
-    var currRoom = 'looneys';
-    var users = {
-        "daffy": {
-          "rooms": ["room1"]
-        },
-        "bugs bunny": {
-          "rooms": ["looneys"]
-        }
-    };
-    var result = {
-        "daffy": {
-          "rooms": ["room1", "looneys"]
-        },
-        "bugs bunny": {
-          "rooms": ["looneys"]
-        }
-    };
-    var expected = socketevents.newUser(nickname,users,currRoom);
-    t.deepEqual(expected, result, 'newUser returns an object');
-    t.end();
-});
+  teardown: function(t){
+    server.close()
+    t.end()
+  }
+})
 
-tape('function updateMessageHistory should take  ')
+test.module1("userJoin event adds user to db and responds with message history", function(t){
+  // Test data
+  var emission = {
+    username: 'sylvester',
+    room: 'room1'
+  }
+
+  // Have user 0 join the room
+  socket0.emit('userJoin', JSON.stringify(emission))
+
+  // Assert that user 1 gets the expected data back
+  // Active users should return a list of all users in the current room
+  socket0.on('activeUsers', function(response) {
+    response = JSON.parse(response)
+    console.log("response: ", response);
+    t.equal(response.username, emission.username, "Listen for username of joining user")
+    t.equal(response.room, emission.room, "Listen for room of joining user")
+    t.end()
+  })
+})
+
+test.module1("test that messages are stored in the database", function(t){
+  var messageObj = {sender: "bugs-bunny", body:"test message", time: new Date(Date.now()).toISOString()}
+  var messageFromServer = "Message stored"
+  socket0.emit("")
+  socket0.emit("sendChat", JSON.stringify(messageObj))
+  socket0.on("updateChat", function(response){
+    t.equal(response, messageFromServer, "Listen for confirmation that the message has been stored")
+  })
+})

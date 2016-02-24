@@ -7,18 +7,6 @@ var port = process.env.PORT || 8000;
 
 var server = http.createServer(router);
 server.listen(port, function(){
-  console.log("listening on port "+port);
+  console.log("listening on port "+ port);
   sck(server);
 });
-
-// var sckt = require('socket.io').listen(server);
-//
-// sckt.sockets.on("connection", function(socket){
-//   socket.on('userJoin', function(nickname){
-//   console.log(nickname);
-//   });
-// });
-
-
-
-// module.exports = server;

@@ -3,7 +3,7 @@ var fs = require('fs');
 
 function router(req, res){
   var url = req.url;
-  console.log("urlsss" , url)
+  console.log("urlsss" , url);
   if(url === "/"){
     // index page
     respondWithFile('/public/index.html', 'html', res);
@@ -15,10 +15,10 @@ function router(req, res){
     respondWithFile(req.url, ext, res);
     console.log("ksjdbfajfbksdfhb");
 
-  } else if(url.indexOf("/main/")>-1){
+  } else if(url.indexOf("?username")>-1){
     console.log(url);
     respondWithFile('/public/chat.html','html',res);
-    console.log("you are on the main room");
+    console.log("you are serving a room");
   }
     else {
     // 404

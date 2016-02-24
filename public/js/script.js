@@ -2,15 +2,16 @@ var socket = io.connect('http://localhost:8000');
 
 socket.on('connect',function(){
   var urlParams = document.URL.split('/');
-  var nickname = urlParams[urlParams.length-1].replace('?nickname=','');
+  var username = urlParams[urlParams.length-1].replace('?username=','');
   var room = urlParams[urlParams.length-2];
-  console.log(room)
-  console.log(nickname);
+  console.log(room);
+  console.log(username);
   var typing = false;
-  var connectionInfo = {nickname:nickname, room:room};
-  socket.emit('userJoin',nickname);
-  socket.on('userJoin', function(nickname){
-    appendItemToList("allMessages").innerHTML = nickname + " has joined the PARTAY";
+  var connectionInfo = JSON.stringify({username:username, room:room});
+  document.getElementById('roomName').innerHTML = room;
+  socket.emit('userJoin',connectionInfo);
+  socket.on('userJoin', function(username){
+    appendItemToList("allMessages").innerHTML = username + " has joined the PARTAY";
   });
 
   socket.on('msgHistory',function( msgHistory ){
@@ -31,7 +32,7 @@ socket.on('connect',function(){
     activeUsersArr.forEach(function(activeUser){
       var liNode = appendItemToList("activeUsers");
       var aNode = document.createElement('a');
-      aNode.href = newChatUrl(nickname,activeUser);
+      aNode.href = newChatUrl(username,activeUser);
       aNode.target = '_blank';
       liNode.appendChild(aNode);
       aNode.innerHTML = activeUser;
@@ -41,7 +42,7 @@ socket.on('connect',function(){
 
   document.querySelector('form').addEventListener('submit', function(e){
     e.preventDefault();
-    var messageObj = createMessageObj(nickname);
+    var messageObj = createMessageObj(username, room);
     appendItemToList("allMessages").innerHTML = "Time: " + messageObj.time + " - " + messageObj.originator + " said: " + messageObj.body;
 
     var chatObj = JSON.stringify(messageObj);
@@ -54,8 +55,8 @@ socket.on('connect',function(){
 
   // "TYPING EVENT" EMITTERS AND LISTENERS
   document.getElementById('sendChat').addEventListener('input', function(){
-    var userTypingObj = nickname;
-    socket.emit( "userIsTyping", userTypingObj );
+
+    socket.emit( "userIsTyping", connectionInfo );
   });
   socket.on('userIsTyping',function( userTyping ){
     typing = true;
@@ -74,17 +75,18 @@ function appendItemToList(list){
   ulList.appendChild(liNode);
   return liNode;
 }
-function createMessageObj(nickname){
+function createMessageObj(username, room){
   return {
-    "originator": nickname,
+    "originator": username,
     "body": document.getElementById('sendChat').value,
-    "time": Date.now()
+    "time": Date.now(),
+    "room": room
   };
 }
 // create a two-way chat url based on alphabetical order
 function newChatUrl(currUser,otherUser){
   var urlPart1 = currUser < otherUser ? '/'+currUser+'&'+otherUser : '/'+otherUser+'&'+currUser;
-  return urlPart1+'/?nickname='+currUser;
+  return urlPart1+'/?username='+currUser;
 }
 // var typing = false;
 // var timeout = undefined;

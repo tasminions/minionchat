@@ -1,4 +1,13 @@
+h1 {
+  text-align: center;
+}
 ul {
   background-color: yellow;
   width:100%;
+}
+
+.error {
+  background-image: url("../../assets/minions-12.png");
+  color: black;
+  height: 300px;
 }

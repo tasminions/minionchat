@@ -1,22 +1,43 @@
 var db = require("../server/db.js")
-var redis = require('redis')
-var client = redis.createClient()
 
-module.exports = function(server) {
+module.exports = {
 
-  var io = require('socket.io').listen(server);
+  init: function(server, redisClient) {
 
-  io.on("connection", function(socket){
-    socket.on("userJoin", function(data){
-      data = JSON.parse(data)
-      db.addUser(client, data.username, data.room, function(){})
+    var io = require('socket.io').listen(server);
 
-      socket.room = data.room
-      socket.join(data.room)
+    io.on("connection", function(socket){
 
-      // Have to use sockets.in instead because broadcast.to isnt working!!
-      io.sockets.in('room1').emit("userJoin", JSON.stringify(data))
+      // User connection handler
+      socket.on("userJoin", function(data){
+        db.addUser(redisClient, data.username, data.room, function(msgHistory) {
+          io.sockets.in(socket.id).emit(msgHistory)
+        })
 
+        socket.username = data.username
+        socket.room = data.room
+        socket.join(data.room)
+
+        // Get an array of active users in the current room
+        var ids = Object.keys(io.sockets.adapter.rooms[socket.room].sockets)
+        names = ids.map(id => io.sockets.connected[id].username)
+
+        // Have to use sockets.in instead because broadcast.to isnt working!!
+        io.sockets.in(data.room).emit("activeUsers", {
+          newUser: data.username,
+          room: data.room,
+          activeUsers: names,
+        })
+      })
+
+      // User message handler
+      socket.on('sendChat', function(data) {
+        console.log("heres the data! ", data);
+      })
     })
-  })
+  },
+
+  kill: function() {
+    // redisClient.end()
+  }
 }

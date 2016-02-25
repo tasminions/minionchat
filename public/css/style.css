@@ -167,7 +167,7 @@ input[type="text"].username {
     width:100%;
     z-index: 2;
 }
-textarea {
+#sendChat {
   resize: none;
   border: 0;
   box-sizing: border-box;

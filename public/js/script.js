@@ -61,6 +61,7 @@ socket.on('connect',function(){
     newMessage(messageObj);
     var chatObj = messageObj;
     socket.emit('sendChat', chatObj);
+    document.getElementById('sendChat').value = ""
   });
   socket.on("updateChat", function(message){
     newMessage(message);

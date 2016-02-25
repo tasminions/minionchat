@@ -9,6 +9,7 @@ body {
 h1 {
   color: #F8DB71;
 }
+
 ul {
   width:100%;
   list-style-type: none;
@@ -30,6 +31,18 @@ li {
 .main li a {
   color: #355287;
 }
+
+.typing {
+  display:block;
+  -webkit-animation-name: bounce;
+  animation-name: bounce;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
 .sidebar li {
   font-style: italic;
 }
@@ -45,6 +58,7 @@ li {
   width:100%;
   float: left;
   background-color: #355287;
+  /*border:3px solid #355287;*/
   font-size: 2em;
   text-align: center;
   z-index: 2;
@@ -84,10 +98,27 @@ input[type="text"].username {
 }
 
 .topleft {
-  width:85%;
+  width:15%;
   height:inherit;
   float:left;
   margin:0;
+  padding:0;
+  background-color: yellow;
+  background-image: url('http://www.wonderslist.com/wp-content/uploads/2015/01/Bugs-Bunny-Looney-Tunes-Characters.jpg');
+  background-position: bottom right;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.topleft:hover {
+
+}
+
+.topcenter {
+  width:70%;
+  height:inherit;
+  float: left;
+  margin:0 auto;
   padding:0;
 }
 
@@ -168,7 +199,7 @@ input[type=submit] {
   and (orientation: portrait) {
 
   .topbar {
-    font-size: 4em;
+    font-size: 3.5em;
   }
   .joinform {
     left:2.5%;
@@ -192,11 +223,15 @@ input[type=submit] {
   li {
     font-size: 2.5em;
   }
-  .topleft, .main {
-    width:75%;
+  .topcenter {
+    width:50%;
+    text-align: center;
   }
-  .sidebar, .topright {
+  .sidebar, .topleft, .topright {
     width:25%;
+  }
+  .main {
+    width: 75%;
   }
   .sidebar {
     height:70vh;
@@ -207,4 +242,10 @@ input[type=submit] {
   textarea {
     font-size: 3.75em;
   }
+}
+
+@-webkit-keyframes bounce {
+0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
+40% {-webkit-transform: translateY(+10px);}
+60% {-webkit-transform: translateY(-10px);}
 }

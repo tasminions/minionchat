@@ -80,7 +80,7 @@ test.module1("test that messages are stored in the database", function(t){
   var messageObj = {sender: 'sylvester', room: 'room1', body: 'test message', time: time}
   var messageFromServer = {success: true, message: "Message stored"};
   socket0.emit("sendChat", messageObj)
-  socket0.on("updateChat", function(response) {
+  socket0.on("messageStored", function(response) {
     t.deepEqual(response, messageFromServer, "Listen for confirmation that the message has been stored")
   })
   socket1.on('updateChat', function(response) {
@@ -88,4 +88,33 @@ test.module1("test that messages are stored in the database", function(t){
   })
 
   t.plan(2)
+})
+
+test.module1("test can send private chat invite", function(t) {
+  socket0.emit('userJoin', {username: 'bugs_bunny', room: 'main'})
+  socket1.emit('userJoin', {username: 'doc', room: 'main'})
+
+  socket0.emit('userJoin', {username: 'bugs_bunny', room: 'bugs&doc'})
+  socket0.emit('newRoom', {sourceUser: 'bugs_bunny', targetUser: 'doc', room: 'bugs&doc'})
+
+  socket1.on('newRoom', function(data) {
+    t.equal(data.sourceUser, 'bugs_bunny', 'Assert source user is as expected')
+    t.equal(data.targetUser, 'doc', 'Assert target user is as expected')
+    t.equal(data.room, 'bugs&doc', 'Assert room is as expected')
+    t.equal(data.url, '/bugs%26doc', 'Assert source user is as expected')
+    t.end()
+  })
+})
+
+test.module1("test the user-typing functionality", function(t) {
+  var user1 = {username: 'bugs_bunny', room: 'main'}
+  var user2 = {username: 'doc', room: 'main'}
+  socket0.emit('userJoin', user1)
+  socket1.emit('userJoin', user2)
+
+  socket0.emit('userTyping', user1)
+  socket1.on('userTyping', function(data) {
+    t.deepEqual(data, user1, 'User is typing data is as expected')
+    t.end()
+  })
 })

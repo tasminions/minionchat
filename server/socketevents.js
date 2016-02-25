@@ -10,6 +10,7 @@ module.exports = {
       // Diagnostics
       console.log('Socket with id "' + socket.id + '" has connected');
       socket.on('disconnect', function() {
+        // emit a user has left event
         console.log('Socket with id "' + socket.id + '" has disconnected');
       })
 
@@ -20,11 +21,10 @@ module.exports = {
         })
 
         socket.username = data.username
-        socket.room = data.room
         socket.join(data.room)
 
         // Get an array of active users in the current room
-        var ids = Object.keys(io.sockets.adapter.rooms[socket.room].sockets)
+        var ids = Object.keys(io.sockets.adapter.rooms[data.room].sockets)
         names = ids.map(id => io.sockets.connected[id].username)
 
         // Have to use sockets.in instead because broadcast.to doesn't work??!!
@@ -38,9 +38,28 @@ module.exports = {
       // User message handler
       socket.on('sendChat', function(data) {
         db.addMessage(redisClient, data.sender, data.room, data.message, data.time, function() {
-          io.sockets.in(socket.id).emit('updateChat', {success: true, message: "Message stored"})
+          io.sockets.in(socket.id).emit('messageStored', {success: true, message: "Message stored"})
         })
         socket.broadcast.to(data.room).emit('updateChat', data)
+      })
+
+      socket.on("newRoom", function(data){
+        var ids = Object.keys(io.sockets.adapter.rooms.main.sockets)
+        var idOfTargetUser = ids.filter(function(id){
+          return data.targetUser === io.sockets.connected[id].username
+        })
+
+        var url = "/" + encodeURIComponent(data.room)
+        io.sockets.in(idOfTargetUser[0]).emit("newRoom", {
+          sourceUser: data.sourceUser,
+          targetUser: data.targetUser,
+          room: data.room,
+          url: url
+        })
+      })
+//{username: 'bugs_bunny', room: 'main'}
+      socket.on("userTyping", function(data){
+        socket.broadcast.to(data.room).emit("userTyping", data)
       })
     })
   }

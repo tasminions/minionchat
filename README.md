@@ -9,15 +9,15 @@ Real time web chat
 ### EVENT FLOW
 ![event-flow](assets/event-flow.jpg)
 * **userJoin** - upon fEnd connection ('connect'):
-    * fEnd socket emits 'userJoin' with **connectionInfo** as a **stringified obj**: {username:"nameEntered",room:"main"}.
+    * fEnd socket emits 'userJoin' with **connectionInfo** as an **object**: {username:"nameEntered",room:"main"}.
     * bEnd socket listens, takes the data. and:
-        * **emits 'activeUsers'** event *to all users*, sending back activeusers list in **stringified array** format.
+        * **emits 'activeUsers'** event *to all users*, sending back activeusers list in **array** format.
             * fEnd listener to 'activeUsers' will *refresh list of active users* in the chat.
-        * **emits 'msgHistory'** event to the *joining user only*, to provide the message history in **stringified array of objects** format.
+        * **emits 'msgHistory'** event to the *joining user only*, to provide the message history in **array of objects** format.
             * fEnd listener to 'msgHistory' will *append message history* as children to the messages ```<ul></ul>``` list.
         * **broadcast 'userJoin'** to rest of the users in the chat
 * **userTyping** - upon 'input' in the textarea:
-    * fEnd socket emits 'userTyping' event with usual connectionInfo *stringified obj*.
+    * fEnd socket emits 'userTyping' event with usual connectionInfo *object*.
     * bEnd socket listens, takes the data, and:
         * **broadcasts 'userTyping'** event to all other users.
 * **updateChat** - upon form 'submit':
@@ -25,7 +25,7 @@ Real time web chat
     * bEnd sockets broascasts 'updateChat' event, passing the same object.
         * fEnd appends message to messageHistory list
 
-**Message object format** (after parsing):
+**Message object format**:
 ```javascript
 {
     "originator":"username",
@@ -37,8 +37,8 @@ Real time web chat
 
 * **'newRoom'** - upon user clicking on one of the activeUsers in the main chat room:
     * fEnd emits:
-      * **'userJoin'** event with **connectionInfo** stringified object.
-      * **'newRoom'** event with the following stringified object {username2:"OtherUserName",room:"roomname"}
+      * **'userJoin'** event with **connectionInfo** object.
+      * **'newRoom'** event with the following object {username2:"OtherUserName",room:"roomname"}
     * bEnd **emits 'newRoom'** event to the user who hasn't joined yet. **Note**: *server should check if the room is already created or not*, or if two users area already in the chat.
       * fEnd receives the 'newRoom' event and appends a message to the message history, containing an **invitation url** to join the chat.
          * Upon the **user clicking the url**, a new **'userJoin'** event will be emitted by the fEnd.

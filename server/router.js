@@ -12,9 +12,9 @@ function router(req, res){
     var ext = req.url.split('.')[1];
     respondWithFile(req.url, ext, res);
 
-  } else if(url.indexOf("/main") > -1){
+  } else if(url.indexOf("?username") > -1){
     respondWithFile('/public/chat.html','html',res);
-
+    
   } else {
     // 404
     respondWithFile('/public/404.html', 'html', res);

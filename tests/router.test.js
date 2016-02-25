@@ -42,7 +42,7 @@ tape("test that css file is served", function(t){
 })
 
 tape("test can visit main chat room", function(t){
-  hyperquest.get(hostUrl + "/main", function(error, response){
+  hyperquest.get(hostUrl + "/main/?username=bug", function(error, response){
     response.pipe(concat(function(payload){
       var chat = fs.readFileSync(__dirname + "/../public/chat.html")
       t.equal(chat.toString('utf8'), payload.toString('utf8'), "chat html sent")

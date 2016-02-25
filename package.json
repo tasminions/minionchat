@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./server/app.js",
     "nodemon": "nodemon ./server/app.js",
-    "test": "tape ./tests/*.js",
+    "test": "node ./node_modules/.bin/istanbul cover tape ./tests/*.js",
     "cover": "node ./node_modules/.bin/istanbul cover tape ./tests/*.js"
   },
   "repository": {

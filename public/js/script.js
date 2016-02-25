@@ -50,7 +50,7 @@ socket.on('connect',function(){
     if(activeUsersObj.newUser && activeUsersObj.newUser !== username){
       console.log("running");
       var newUserMsg = appendItemToList("allMessages");
-      newUserMsg.innerHTML = "Time:" + Date.now() + activeUsersObj.newUser + " has joined the room";
+      newUserMsg.innerHTML = "Time:" + formatTime(Date.now())+ activeUsersObj.newUser + " has joined the room";
       newUserMsg.style["font-style"] = "italic";
     }
   });
@@ -88,7 +88,7 @@ socket.on('connect',function(){
   }
   socket.on('userLeave',function( info ){
     var userLeftMsg = appendItemToList("allMessages");
-    userLeftMsg.innerHTML = "Time:" + Date.now() + info.username + " has left the room";
+    userLeftMsg.innerHTML = "Time:" + formatTime(Date.now()) + info.username + " has left the room";
     userLeftMsg.style["font-style"] = "italic";
   })
 });
@@ -105,7 +105,7 @@ function createMessageObj(username, room){
   return {
     "sender": username,
     "message": document.getElementById('sendChat').value,
-    "time": Date.now(),
+    "time": formatTime(Date.now()),
     "room": room
   };
 }
@@ -121,6 +121,15 @@ function newMessage(messageObject){
 function scrollDown(listClass){
   var div = document.getElementsByClassName(listClass)[0];
   div.scrollTop = div.scrollHeight;
+}
+
+function formatTime(date){
+  date = new Date(date);
+  var hours = date.getHours();
+  var minutes = "0" + date.getMinutes();
+  var seconds = "0" + date.getSeconds();
+  var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+  return formattedTime;
 }
 // var typing = false;
 // var timeout = undefined;

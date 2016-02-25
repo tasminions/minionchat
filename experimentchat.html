@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MinionChat</title>
+    <link rel="stylesheet" href="/public/css/style.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="experiment.css">
+    <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div class="container">
+    <div class="topbar">
+      <div class="topleft">
+        <h1 id="roomName"> </h1>
+      </div>
+      <div class="topright"> </div>
+    </div>
+    <div class="sidebar">
+      <ul id="activeUsers"> </ul>
+    </div>
+    <div class="main">
+      <ul id="allMessages"> </ul>
+    </div>
+    <div class="bottombar">
+      <form id="chatBox">
+        <textarea id="sendChat" rows="5" columns="50" placeholder="Type your message here" required autofocus></textarea>
+        <input type="submit" class="submit-btn" value="SEND">
+      </form>
+    </div>
+    <script type="text/javascript" src="/public/js/socket.js"> </script>
+    <!-- <script type="text/javascript" src="/public/js/sckt-events.js"></script> -->
+    <script type="text/javascript" src="/public/js/script.js"></script>
+  </div>
+  </body>
+</html>

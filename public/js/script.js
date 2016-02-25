@@ -1,15 +1,20 @@
 var socket = io.connect();
 
 socket.on('connect',function(){
-  var urlParams = document.URL.split('/');
-  var username = urlParams[urlParams.length-1].replace('?username=','');
-  var room = urlParams[urlParams.length-2];
-  console.log(room);
-  console.log(username);
-  var typing = false;
+  var urlParams = document.URL.replace('://','').split('/');
+  urlParams.splice(0,1);                              //remove http:localhost form url params
+  var theme = urlParams[0];
+  var room = urlParams[1];
+  var username = urlParams[2].replace('?username=','');
+
   var connectionInfo = {username:username, room:room};
   document.getElementById('roomName').innerHTML = room;
 
+  provideThemeChangeLink(theme,room,username);
+  document.getElementById('themeChange').addEventListener('click',function(e){
+    e.preventDefault();
+    changeCss(theme);
+  });
   socket.emit('userJoin',connectionInfo);
   if(room !== "main"){
     var newRoomObj = {
@@ -20,7 +25,6 @@ socket.on('connect',function(){
     socket.emit("newRoom", newRoomObj);
   }
   socket.on('messageHistory',function( msgHistory ){
-    console.log("message history", msgHistory)
     var ulList = document.getElementById('allMessages');
     ulList.innerHTML = "";
     var msgHistoryArr =  msgHistory;
@@ -35,7 +39,6 @@ socket.on('connect',function(){
     ulList.innerHTML = "";
     // repopulate the active users list with all active users
     var activeUsersArr = activeUsersObj.activeUsers;
-    console.log(activeUsersArr);
     activeUsersArr.forEach(function(activeUser){
       if(activeUser !== username){
         var liNode = appendItemToList("activeUsers");
@@ -48,9 +51,8 @@ socket.on('connect',function(){
     }
     });
     if(activeUsersObj.newUser && activeUsersObj.newUser !== username){
-      console.log("running");
       var newUserMsg = appendItemToList("allMessages");
-      newUserMsg.innerHTML = formatTime(Date.now())+ activeUsersObj.newUser + " has joined the room";
+      newUserMsg.innerHTML = formatTime(Date.now())+ " - " + activeUsersObj.newUser + " has joined the room";
       newUserMsg.style["font-style"] = "italic";
       scrollDown('main');
     }
@@ -68,7 +70,6 @@ socket.on('connect',function(){
     newMessage(message);
   });
   socket.on("newRoom", function(roomInvitation){
-    console.log("room invitation", roomInvitation);
     appendItemToList("allMessages").innerHTML = "<a href=" + roomInvitation.url +" target='_blank'>" + roomInvitation.sourceUser + " has invited you to chat privately. </a>";
   })
 
@@ -78,7 +79,6 @@ socket.on('connect',function(){
     socket.emit( "userTyping", connectionInfo );
   });
   socket.on('userTyping',function( data ){
-    console.log('typing');
     var userTyping = data.username;
     document.getElementById( userTyping ).classList.add('typing');
     setTimeout(function(){
@@ -90,7 +90,7 @@ socket.on('connect',function(){
   };
   socket.on('userLeave',function( info ){
     var userLeftMsg = appendItemToList("allMessages");
-    userLeftMsg.innerHTML = formatTime(Date.now()) + info.username + " has left the room";
+    userLeftMsg.innerHTML = formatTime(Date.now()) + " - " + info.username + " has left the room";
     userLeftMsg.style["font-style"] = "italic";
     scrollDown('main');
   });
@@ -134,4 +134,23 @@ function formatTime(date){
   var seconds = "0" + date.getSeconds();
   var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
   return formattedTime;
+}
+function otherTheme(currTheme){
+  return currTheme === 'minions' ? 'looneys':'minions';
+}
+
+function changeCss(theme){
+  var oldLink = document.getElementsByTagName("link").item('/public/css/'+theme+'.css');
+  var newLink = document.createElement("link");
+  newLink.setAttribute("rel", "stylesheet");
+  newLink.setAttribute("type", "text/css");
+  newLink.setAttribute("href", '/public/css/'+otherTheme(theme)+'.css');
+  newLink.setAttribute("media", "screen");
+  newLink.setAttribute("charset",'utf-8');
+  document.getElementsByTagName("head").item(0).removeChild(oldLink);
+  document.getElementsByTagName("head").item(0).appendChild(newLink);
+}
+function provideThemeChangeLink(theme,room,username){
+  var anchor = document.getElementById('themeChange');
+  anchor.href= otherTheme(theme)+'/'+room+'/?username='+username;
 }

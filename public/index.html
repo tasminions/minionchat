@@ -6,11 +6,15 @@
         <link rel="stylesheet" href="/public/css/style.css" media="screen" title="no title" charset="utf-8">
     </head>
     <body>
-        Hey there!
-        <form action="/main/" method="get">
+      <div class="topbar">
           <h1>JOIN US</h1>
-          <input type="text" id="nickname" name="nickname" placeholder="Type your nickname here.." required autofocus>
-          <input type="submit" >
+      </div>
+      <div class="joinform">
+        <form action="/main/" method="get">
+          <textarea class="username" id="username" name="username" placeholder="Type your nickname here.." required autofocus></textarea>
+          <input type="submit" value="JOIN">
         </form>
+      </div>
+      <div class="minions-big"> </div>
     </body>
 </html>

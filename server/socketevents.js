@@ -24,8 +24,8 @@ function newUser(nickname, users, currRoom){
 module.exports = function(server) {
   var sckt = require('socket.io')(server);
   sckt.sockets.on("connection", function(socket){
-    socket.on('userJoin', function(nickname){
-      console.log(nickname);
+    socket.on('userJoin', function(connectionInfo){
+      console.log(connectionInfo);
       var testMsgHist = JSON.stringify([
             {
                 "originator":"bugs",

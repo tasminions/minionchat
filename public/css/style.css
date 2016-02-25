@@ -1,4 +1,152 @@
+html *{
+  margin:0;
+  padding:0;
+}
+body {
+  background-color: #F8DB71;
+}
+
+h1 {
+  color: #355287;
+}
 ul {
-  background-color: yellow;
   width:100%;
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color:#f9e7aa;
+}
+li {
+  padding: 1vh 0 1vh 2vw;
+  color: #355287;
+  font-size: 2em;
+}
+
+.error {
+  background-image: url("../../assets/minions-12.png");
+  color: black;
+  height: 300px;
+}
+.topbar {
+  position: fixed;
+  top:0;
+  height:10vh;
+  width:100%;
+  float: left;
+  background-color: #aa913c;
+  font-size: 2em;
+  text-align: center;
+  z-index: 2;
+}
+
+.joinform {
+  position:absolute;
+  top:20%;
+  left: 15%;
+  width:70%;
+  background-color: #355287;
+  height: 20vh;
+}
+
+.minions-big {
+  position: absolute;
+  bottom: 0;
+  height: 50vh;
+  width:100%;
+  background-image: url('http://minions2015.com/wp-content/uploads/2015/10/despicable-me-minions-hd-wallpaper-wide1.jpg');
+  background-size: 100% 110%;
+}
+
+input[type="text"].username {
+  margin: 3vh 0 3vh 2%;
+  padding:2vh 0;
+  height:15vh;
+  line-height: 10vh;
+  font-size: 2em;
+  resize: none;
+  border: 0;
+  box-sizing: border-box;
+  float:left;
+  padding:0;
+  width:70%;
+  background-color: #f9e7aa;
+}
+
+.topleft {
+  width:85%;
+  height:inherit;
+  float:left;
+  margin:0;
+  padding:0;
+}
+
+.topright {
+  width:15%;
+  height:inherit;
+  float:right;
+  margin:0;
+  padding:0;
+  background-color: yellow;
+  background-image: url('http://assets.skiptomylou.org/wp-content/uploads/2015/07/Minion-Eye.jpg');
+  background-position: bottom right;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.sidebar {
+  position:fixed;
+  top:10vh;
+  right:0;
+  width: 15%;
+  height:50vw;
+  background-color: #9aa8c3;
+  margin:0;
+  padding:0;
+  z-index: 2;
+}
+.main {
+  position:absolute;
+  bottom:20vh;
+  width:85%;
+  height: 70vh;
+  overflow-y:scroll;
+  word-wrap: break-word;
+}
+.main li:nth-child(2n+1) {
+  background-color: #f9e7aa;
+}
+.main li:last-child {
+  font-weight:bold;
+}
+.bottombar {
+    background-color: #355287;
+    height: 20vh;
+    position:fixed;
+    bottom:0;
+    width:100%;
+    z-index: 2;
+}
+textarea {
+  resize: none;
+  border: 0;
+  box-sizing: border-box;
+  margin: 2vh 0 2vh 2%;
+  float:left;
+  padding:0;
+  width:70%;
+  height: 16vh;
+  font-size: 2em;
+  overflow-x: scroll;
+  background-color: #f9e7aa;
+}
+input[type=submit] {
+  float:right;
+  margin: 2vh 2% 2vh 0;
+  background-color: #aa913c;
+  width:25%;
+  font-size: 3.5em;
+  line-height: 16vh;
+  font-weight: bold;
+  border-radius: 2vw;
 }

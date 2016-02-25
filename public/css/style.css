@@ -59,12 +59,19 @@ li {
   background-size: 100% 110%;
 }
 
-textarea.username {
+input[type="text"].username {
   margin: 3vh 0 3vh 2%;
   padding:2vh 0;
   height:15vh;
   line-height: 10vh;
-  font-size: 2.5em;
+  font-size: 2em;
+  resize: none;
+  border: 0;
+  box-sizing: border-box;
+  float:left;
+  padding:0;
+  width:70%;
+  background-color: #f9e7aa;
 }
 
 .topleft {

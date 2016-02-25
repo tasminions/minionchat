@@ -53,18 +53,18 @@ socket.on('connect',function(){
 
   });
 
-  // "TYPING EVENT" EMITTERS AND LISTENERS
-  document.getElementById('sendChat').addEventListener('input', function(){
-
-    socket.emit( "userIsTyping", connectionInfo );
-  });
-  socket.on('userIsTyping',function( userTyping ){
-    typing = true;
-    document.getElementById( userTyping ).innerHTML += ' is typing...';
-    setTimeout(function(){
-      document.getElementById( userTyping ).innerHTML -= ' is typing...';
-    },3000);
-  });
+  // // "TYPING EVENT" EMITTERS AND LISTENERS
+  // document.getElementById('sendChat').addEventListener('input', function(){
+  //
+  //   socket.emit( "userIsTyping", connectionInfo );
+  // });
+  // socket.on('userIsTyping',function( userTyping ){
+  //   typing = true;
+  //   document.getElementById( userTyping ).innerHTML += ' is typing...';
+  //   setTimeout(function(){
+  //     document.getElementById( userTyping ).innerHTML -= ' is typing...';
+  //   },3000);
+  // });
 
 });
 

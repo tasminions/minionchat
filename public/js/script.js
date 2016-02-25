@@ -120,7 +120,7 @@ function newChatUrl(currUser,otherUser){
 
 function newMessage(messageObject){
   appendItemToList('allMessages').innerHTML = messageObject.time + " - " + messageObject.sender + " said: " + messageObject.message;
-  scrollDown("main");
+  setTimeout( function(){ scrollDown("main") }, 100 );
 }
 function scrollDown(listClass){
   var div = document.getElementsByClassName(listClass)[0];

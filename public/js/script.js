@@ -52,6 +52,7 @@ socket.on('connect',function(){
       var newUserMsg = appendItemToList("allMessages");
       newUserMsg.innerHTML = "Time:" + Date.now() + activeUsersObj.newUser + " has joined the room";
       newUserMsg.style["font-style"] = "italic";
+      scrollDown('main');
     }
   });
 
@@ -68,29 +69,32 @@ socket.on('connect',function(){
   });
   socket.on("newRoom", function(roomInvitation){
     console.log("room invitation", roomInvitation);
-    appendItemToList("allMessages").innerHTML = "<a href=" + roomInvitation.url +" target='_blank'>" + roomInvitation.sourceUser + "has invited you to chat privately. </a>";
+    appendItemToList("allMessages").innerHTML = "<a href=" + roomInvitation.url +" target='_blank'>" + roomInvitation.sourceUser + " has invited you to chat privately. </a>";
   })
 
 
   // "TYPING EVENT" EMITTERS AND LISTENERS
   document.getElementById('sendChat').addEventListener('input', function(){
-    socket.emit( "userIsTyping", connectionInfo );
+    socket.emit( "userTyping", connectionInfo );
   });
-  socket.on('userIsTyping',function( userTyping ){
-    typing = true;
-    document.getElementById( userTyping ).innerHTML += ' is typing...';
+  socket.on('userTyping',function( data ){
+    console.log('typing');
+    var userTyping = data.username;
+    document.getElementById( userTyping ).classList.add('typing');
     setTimeout(function(){
-      document.getElementById( userTyping ).innerHTML -= ' is typing...';
+      document.getElementById( userTyping ).classList.remove('typing');
     },3000);
   });
   window.onbeforeunload = function(e){
     socket.emit('userLeave',connectionInfo);
-  }
+  };
   socket.on('userLeave',function( info ){
     var userLeftMsg = appendItemToList("allMessages");
-    userLeftMsg.innerHTML = "Time:" + Date.now() + info.username + " has left the room";
+    userLeftMsg.innerHTML = Date.now() + info.username + " has left the room";
     userLeftMsg.style["font-style"] = "italic";
-  })
+    scrollDown('main');
+  });
+
 });
 
 
@@ -98,7 +102,6 @@ function appendItemToList(list){
   var ulList = document.getElementById(list);
   var liNode = document.createElement('li');
   ulList.appendChild(liNode);
-  scrollDown("main");
   return liNode;
 }
 function createMessageObj(username, room){
@@ -116,28 +119,10 @@ function newChatUrl(currUser,otherUser){
 }
 
 function newMessage(messageObject){
-  appendItemToList('allMessages').innerHTML = "Time: " + messageObject.time + " - " + messageObject.sender + " said: " + messageObject.message;
+  appendItemToList('allMessages').innerHTML = messageObject.time + " - " + messageObject.sender + " said: " + messageObject.message;
+  scrollDown("main");
 }
 function scrollDown(listClass){
   var div = document.getElementsByClassName(listClass)[0];
   div.scrollTop = div.scrollHeight;
 }
-// var typing = false;
-// var timeout = undefined;
-//
-// function timeoutFunction(){
-//   typing = false;
-//   socket.emit(noLongerTypingMessage);
-// }
-//
-// function onKeyDownNotEnter(){
-//   if(typing == false) {
-//     typing = true
-//     socket.emit(typingMessage);
-//     timeout = setTimeout(timeoutFunction, 5000);
-//   } else {
-//     clearTimeout(timeout);
-//     timeout = setTimeout(timeoutFunction, 5000);
-//   }
-//
-// }

@@ -110,7 +110,7 @@ function createMessageObj(username, room){
     "message": document.getElementById('sendChat').value,
     "time": Date.now(),
     "room": room
-  };
+  }; //
 }
 // create a two-way chat url based on alphabetical order
 function newChatUrl(currUser,otherUser){

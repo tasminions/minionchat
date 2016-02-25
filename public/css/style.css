@@ -18,6 +18,7 @@ a {
   text-decoration: none;
   color: #f9e7aa;
 }
+
 a:hover {
   color: #aa913c;
 }
@@ -25,6 +26,9 @@ li {
   padding: 1vh 0 1vh 2vw;
   color: #355287;
   font-size: 2em;
+}
+.main li a {
+  color: #355287;
 }
 .sidebar li {
   font-style: italic;

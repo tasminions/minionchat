@@ -9,11 +9,12 @@ socket.on('connect',function(){
   var typing = false;
   var connectionInfo = {username:username, room:room};
   document.getElementById('roomName').innerHTML = room;
+
   socket.emit('userJoin',connectionInfo);
   if(room !== "main"){
     var newRoomObj = {
-      username: username,
-      username2: room.split("&")[1],
+      sourceUser: username,
+      targetUser: room.replace(username, "").replace("&",""),
       room: room
     }
     socket.emit("newRoom", newRoomObj);
@@ -34,19 +35,23 @@ socket.on('connect',function(){
     ulList.innerHTML = "";
     // repopulate the active users list with all active users
     var activeUsersArr = activeUsersObj.activeUsers;
-    console.log(activeUsersArr)
+    console.log(activeUsersArr);
     activeUsersArr.forEach(function(activeUser){
-      var liNode = appendItemToList("activeUsers");
-      var aNode = document.createElement('a');
-      aNode.href = newChatUrl(username,activeUser);
-      aNode.target = '_blank';
-      liNode.appendChild(aNode);
-      aNode.innerHTML = activeUser;
-      aNode.id = activeUser;
+      if(activeUser !== username){
+        var liNode = appendItemToList("activeUsers");
+        var aNode = document.createElement('a');
+        aNode.href = newChatUrl(username,activeUser);
+        aNode.target = '_blank';
+        liNode.appendChild(aNode);
+        aNode.innerHTML = activeUser;
+        aNode.id = activeUser;
+    }
     });
-    if(activeUsersObj.newUser !== username){
+    if(activeUsersObj.newUser && activeUsersObj.newUser !== username){
       console.log("running");
-      appendItemToList("allMessages").innerHTML = "Time:" + Date.now() + activeUsersObj.newUser + " has joined the room";
+      var newUserMsg = appendItemToList("allMessages");
+      newUserMsg.innerHTML = "Time:" + Date.now() + activeUsersObj.newUser + " has joined the room";
+      newUserMsg.style["font-style"] = "italic";
     }
   });
 
@@ -58,17 +63,16 @@ socket.on('connect',function(){
     socket.emit('sendChat', chatObj);
   });
   socket.on("updateChat", function(message){
-    console.log(message);
     newMessage(message);
   });
   socket.on("newRoom", function(roomInvitation){
-    appendItemToList("allMessages").innerHTML = "<a href=" + roomInvitation.url +">" + roomInvitation.sourceUser + "has invited you to chat privately. </a>";
-
+    console.log("room invitation", roomInvitation);
+    appendItemToList("allMessages").innerHTML = "<a href=" + roomInvitation.url +" target='_blank'>" + roomInvitation.sourceUser + "has invited you to chat privately. </a>";
   })
+
 
   // "TYPING EVENT" EMITTERS AND LISTENERS
   document.getElementById('sendChat').addEventListener('input', function(){
-
     socket.emit( "userIsTyping", connectionInfo );
   });
   socket.on('userIsTyping',function( userTyping ){
@@ -78,7 +82,14 @@ socket.on('connect',function(){
       document.getElementById( userTyping ).innerHTML -= ' is typing...';
     },3000);
   });
-
+  window.onbeforeunload = function(e){
+    socket.emit('userLeave',connectionInfo);
+  }
+  socket.on('userLeave',function( info ){
+    var userLeftMsg = appendItemToList("allMessages");
+    userLeftMsg.innerHTML = "Time:" + Date.now() + info.username + " has left the room";
+    userLeftMsg.style["font-style"] = "italic";
+  })
 });
 
 
@@ -86,6 +97,7 @@ function appendItemToList(list){
   var ulList = document.getElementById(list);
   var liNode = document.createElement('li');
   ulList.appendChild(liNode);
+  scrollDown("main");
   return liNode;
 }
 function createMessageObj(username, room){
@@ -105,7 +117,10 @@ function newChatUrl(currUser,otherUser){
 function newMessage(messageObject){
   appendItemToList('allMessages').innerHTML = "Time: " + messageObject.time + " - " + messageObject.sender + " said: " + messageObject.message;
 }
-
+function scrollDown(listClass){
+  var div = document.getElementsByClassName(listClass)[0];
+  div.scrollTop = div.scrollHeight;
+}
 // var typing = false;
 // var timeout = undefined;
 //

@@ -24,8 +24,8 @@ module.exports = {
         socket.join(data.room)
 
         // Get an array of active users in the current room
-        var ids = Object.keys(io.sockets.adapter.rooms[data.room].sockets)
-        names = ids.map(id => io.sockets.connected[id].username)
+
+        names = updateNames(data)
 
         // Have to use sockets.in instead because broadcast.to doesn't work??!!
         io.sockets.in(data.room).emit("activeUsers", {
@@ -44,12 +44,13 @@ module.exports = {
       })
 
       socket.on("newRoom", function(data){
+        console.log("dta", data)
         var ids = Object.keys(io.sockets.adapter.rooms.main.sockets)
         var idOfTargetUser = ids.filter(function(id){
           return data.targetUser === io.sockets.connected[id].username
         })
 
-        var url = "/" + encodeURIComponent(data.room)
+        var url = "/" + data.room + "/?username="+data.targetUser
         io.sockets.in(idOfTargetUser[0]).emit("newRoom", {
           sourceUser: data.sourceUser,
           targetUser: data.targetUser,
@@ -57,10 +58,27 @@ module.exports = {
           url: url
         })
       })
-//{username: 'bugs_bunny', room: 'main'}
       socket.on("userTyping", function(data){
         socket.broadcast.to(data.room).emit("userTyping", data)
       })
+      socket.on('userLeave',function(connectionInfo){
+        // // Get an array of active users in the current room
+
+        // console.log(ids);
+        // console.log(names);
+        socket.leave(connectionInfo.room)
+        socket.broadcast.to(connectionInfo.room).emit('userLeave',connectionInfo);
+        socket.broadcast.to(connectionInfo.room).emit('activeUsers',{activeUsers: updateNames(connectionInfo)});
+        console.log('broadcasting to',connectionInfo.room,' that ',connectionInfo.username,' has left');
+      });
+      function updateNames(infoObj){
+        var ids = Object.keys(io.sockets.adapter.rooms[infoObj.room].sockets);
+        names = ids.map(id => io.sockets.connected[id].username);
+        return names
+
+      }
+
     })
   }
+
 }

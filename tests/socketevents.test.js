@@ -101,7 +101,7 @@ test.module1("test can send private chat invite", function(t) {
     t.equal(data.sourceUser, 'bugs_bunny', 'Assert source user is as expected')
     t.equal(data.targetUser, 'doc', 'Assert target user is as expected')
     t.equal(data.room, 'bugs&doc', 'Assert room is as expected')
-    t.equal(data.url, '/bugs%26doc', 'Assert source user is as expected')
+    t.equal(data.url, '/bugs&doc/?username=doc', 'Assert source user is as expected')
     t.end()
   })
 })

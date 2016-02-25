@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./server/app.js",
     "nodemon": "nodemon ./server/app.js",
-    "test": "tape ./tests/*",
+    "test": "tape ./tests/*.js",
     "cover": "node ./node_modules/.bin/istanbul cover tape ./tests/*.js"
   },
   "repository": {
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/tasminions/minionchat#readme",
   "devDependencies": {
     "codecov": "^1.0.1",
+    "hyperquest": "^1.3.0",
     "istanbul": "^0.4.2",
     "jasmine": "^2.4.1",
     "nodemon": "^1.9.0",

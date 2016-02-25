@@ -7,7 +7,7 @@ body {
 }
 
 h1 {
-  color: #355287;
+  color: #F8DB71;
 }
 ul {
   width:100%;
@@ -16,14 +16,19 @@ ul {
 
 a {
   text-decoration: none;
-  color:#f9e7aa;
+  color: #f9e7aa;
+}
+a:hover {
+  color: #aa913c;
 }
 li {
   padding: 1vh 0 1vh 2vw;
   color: #355287;
   font-size: 2em;
 }
-
+.sidebar li {
+  font-style: italic;
+}
 .error {
   background-image: url("../../assets/minions-12.png");
   color: black;
@@ -35,7 +40,7 @@ li {
   height:10vh;
   width:100%;
   float: left;
-  background-color: #aa913c;
+  background-color: #355287;
   font-size: 2em;
   text-align: center;
   z-index: 2;
@@ -139,14 +144,63 @@ textarea {
   font-size: 2em;
   overflow-x: scroll;
   background-color: #f9e7aa;
+  color:#355287;
 }
 input[type=submit] {
   float:right;
   margin: 2vh 2% 2vh 0;
   background-color: #aa913c;
+  color:#355287;
   width:25%;
   font-size: 3.5em;
   line-height: 16vh;
   font-weight: bold;
   border-radius: 2vw;
+}
+
+@media  only screen and (min-device-width: 320px)
+  and (max-device-width: 880px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) {
+
+  .topbar {
+    font-size: 4em;
+  }
+  .joinform {
+    left:2.5%;
+    width:95%;
+    height: 15vh;
+  }
+
+  input[type="text"].username {
+    margin: 3vh 0 3vh 2%;
+    padding:1vh 0;
+    height:10vh;
+    line-height: 10vh;
+    font-size: 3.25em;
+  }
+  input[type="submit"].joinUs {
+    margin: 3vh 2% 3vh 0;
+    height:10vh;
+    line-height: 10vh;
+    font-size: 4em;
+  }
+  li {
+    font-size: 2.5em;
+  }
+  .topleft, .main {
+    width:75%;
+  }
+  .sidebar, .topright {
+    width:25%;
+  }
+  .sidebar {
+    height:70vh;
+  }
+  input[type="submit"] {
+    font-size: 4em;
+  }
+  textarea {
+    font-size: 3.75em;
+  }
 }

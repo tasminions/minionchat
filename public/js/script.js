@@ -10,25 +10,31 @@ socket.on('connect',function(){
   var connectionInfo = {username:username, room:room};
   document.getElementById('roomName').innerHTML = room;
   socket.emit('userJoin',connectionInfo);
-  socket.on('userJoin', function(username){
-    appendItemToList("allMessages").innerHTML = username + " has joined the PARTAY";
-  });
-
-  socket.on('msgHistory',function( msgHistory ){
+  if(room !== "main"){
+    var newRoomObj = {
+      username: username,
+      username2: room.split("&")[1],
+      room: room
+    }
+    socket.emit("newRoom", newRoomObj);
+  }
+  socket.on('messageHistory',function( msgHistory ){
+    console.log("message history", msgHistory)
     var ulList = document.getElementById('allMessages');
     ulList.innerHTML = "";
     var msgHistoryArr =  msgHistory;
     msgHistoryArr.forEach( function( messageObj ){
-      appendItemToList('allMessages').innerHTML = "Time: " + messageObj.time + " - " + messageObj.originator + " said: " + messageObj.body;
+      newMessage(messageObj)
     });
   });
 
-  socket.on('activeUsers',function(activeUsers){
+  socket.on('activeUsers',function(activeUsersObj){
     // reset the active users list
     var ulList = document.getElementById('activeUsers');
     ulList.innerHTML = "";
     // repopulate the active users list with all active users
-    var activeUsersArr = activeUsers;
+    var activeUsersArr = activeUsersObj.activeUsers;
+    console.log(activeUsersArr)
     activeUsersArr.forEach(function(activeUser){
       var liNode = appendItemToList("activeUsers");
       var aNode = document.createElement('a');
@@ -38,33 +44,40 @@ socket.on('connect',function(){
       aNode.innerHTML = activeUser;
       aNode.id = activeUser;
     });
+    if(activeUsersObj.newUser !== username){
+      console.log("running");
+      appendItemToList("allMessages").innerHTML = "Time:" + Date.now() + activeUsersObj.newUser + " has joined the room";
+    }
   });
 
   document.querySelector('form').addEventListener('submit', function(e){
     e.preventDefault();
     var messageObj = createMessageObj(username, room);
-    appendItemToList("allMessages").innerHTML = "Time: " + messageObj.time + " - " + messageObj.originator + " said: " + messageObj.body;
-
+    newMessage(messageObj);
     var chatObj = messageObj;
     socket.emit('sendChat', chatObj);
   });
   socket.on("updateChat", function(message){
-    // will update everyone's chat
-
+    console.log(message);
+    newMessage(message);
   });
+  socket.on("newRoom", function(roomInvitation){
+    appendItemToList("allMessages").innerHTML = "<a href=" + roomInvitation.url +">" + roomInvitation.sourceUser + "has invited you to chat privately. </a>";
 
-  // // "TYPING EVENT" EMITTERS AND LISTENERS
-  // document.getElementById('sendChat').addEventListener('input', function(){
-  //
-  //   socket.emit( "userIsTyping", connectionInfo );
-  // });
-  // socket.on('userIsTyping',function( userTyping ){
-  //   typing = true;
-  //   document.getElementById( userTyping ).innerHTML += ' is typing...';
-  //   setTimeout(function(){
-  //     document.getElementById( userTyping ).innerHTML -= ' is typing...';
-  //   },3000);
-  // });
+  })
+
+  // "TYPING EVENT" EMITTERS AND LISTENERS
+  document.getElementById('sendChat').addEventListener('input', function(){
+
+    socket.emit( "userIsTyping", connectionInfo );
+  });
+  socket.on('userIsTyping',function( userTyping ){
+    typing = true;
+    document.getElementById( userTyping ).innerHTML += ' is typing...';
+    setTimeout(function(){
+      document.getElementById( userTyping ).innerHTML -= ' is typing...';
+    },3000);
+  });
 
 });
 
@@ -77,8 +90,8 @@ function appendItemToList(list){
 }
 function createMessageObj(username, room){
   return {
-    "originator": username,
-    "body": document.getElementById('sendChat').value,
+    "sender": username,
+    "message": document.getElementById('sendChat').value,
     "time": Date.now(),
     "room": room
   };
@@ -88,6 +101,11 @@ function newChatUrl(currUser,otherUser){
   var urlPart1 = currUser < otherUser ? '/'+currUser+'&'+otherUser : '/'+otherUser+'&'+currUser;
   return urlPart1+'/?username='+currUser;
 }
+
+function newMessage(messageObject){
+  appendItemToList('allMessages').innerHTML = "Time: " + messageObject.time + " - " + messageObject.sender + " said: " + messageObject.message;
+}
+
 // var typing = false;
 // var timeout = undefined;
 //

@@ -16,7 +16,7 @@ module.exports = {
       // User connection handler
       socket.on("userJoin", function(data){
         db.addUser(redisClient, data.username, data.room, function(msgHistory) {
-          io.sockets.in(socket.id).emit(msgHistory)
+          io.sockets.in(socket.id).emit('messageHistory', msgHistory)
         })
 
         socket.username = data.username

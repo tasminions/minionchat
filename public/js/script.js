@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:8000');
+var socket = io.connect();
 
 socket.on('connect',function(){
   var urlParams = document.URL.split('/');

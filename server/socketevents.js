@@ -24,8 +24,8 @@ module.exports = {
         socket.join(data.room)
 
         // Get an array of active users in the current room
-        var ids = Object.keys(io.sockets.adapter.rooms[socket.room].sockets)
-        names = ids.map(id => io.sockets.connected[id].username)
+        var ids = Object.keys(io.sockets.adapter.rooms[socket.room].sockets);
+        names = ids.map(id => io.sockets.connected[id].username);
 
         // Have to use sockets.in instead because broadcast.to doesn't work??!!
         io.sockets.in(data.room).emit("activeUsers", {
@@ -42,6 +42,18 @@ module.exports = {
         })
         socket.broadcast.to(data.room).emit('updateChat', data)
       })
+
+      socket.on('userLeave',function(connectionInfo){
+        // Get an array of active users in the current room
+        var ids = Object.keys(io.sockets.adapter.rooms[socket.room].sockets);
+        names = ids.map(id => io.sockets.connected[id].username);
+        console.log(ids);
+        console.log(names);
+        socket.broadcast.to(connectionInfo.room).emit('userLeave',connectionInfo);
+        socket.broadcast.to(connectionInfo.room).emit('activeUsers',{activeUsers: names});
+        console.log('broadcasting to',connectionInfo.room,' that ',connectionInfo.username,' has left');
+      });
+
     })
   }
 }

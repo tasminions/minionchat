@@ -6,12 +6,6 @@ Real time web chat
 
 
 ## EVENTS
-### CLIENT SIDE
-![client-side-events](assets/client-events.jpg)
-
-### SERVER SIDE
-![server-side-events](assets/server-events.jpg)
-
 ### EVENT FLOW
 ![event-flow](assets/event-flow.jpg)
 * **userJoin** - upon fEnd connection ('connect'):
@@ -41,8 +35,19 @@ Real time web chat
 }
 ```
 
-* 'newRoom' - upon user clicking on one of the activeUsers in the main chat room:
-    * fEnd emits 'newRoom' event with **TBD**... 2 'userJoin' events?? **TBD**
+* **'newRoom'** - upon user clicking on one of the activeUsers in the main chat room:
+    * fEnd emits:
+      * **'userJoin'** event with **connectionInfo** stringified object.
+      * **'newRoom'** event with the following stringified object {username2:"OtherUserName",room:"roomname"}
+    * bEnd **emits 'newRoom'** event to the user who hasn't joined yet. **Note**: *server should check if the room is already created or not*, or if two users area already in the chat.
+      * fEnd receives the 'newRoom' event and appends a message to the message history, containing an **invitation url** to join the chat.
+         * Upon the **user clicking the url**, a new **'userJoin'** event will be emitted by the fEnd.
+
+### CLIENT SIDE
+![client-side-events](assets/client-events.jpg)
+
+### SERVER SIDE
+![server-side-events](assets/server-events.jpg)
 
 ## SAMPLE DATA STRUCTURE (within database)
 ```JSON

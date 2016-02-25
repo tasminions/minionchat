@@ -199,7 +199,7 @@ input[type=submit] {
   and (orientation: portrait) {
 
   .topbar {
-    font-size: 3.5em;
+    font-size: 3em;
   }
   .joinform {
     left:2.5%;
@@ -244,6 +244,18 @@ input[type=submit] {
   }
 }
 
+@media  only screen and (min-device-width: 320px)
+  and (max-device-width: 880px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+
+    .topbar{
+      height:15vh;
+    }
+    .sidebar{
+      top:15vh;
+    }
+}
 @-webkit-keyframes bounce {
 0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
 40% {-webkit-transform: translateY(+10px);}

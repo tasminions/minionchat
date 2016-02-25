@@ -10,21 +10,28 @@ var port = process.env.PORT || 8000
 var dbUrl = process.env.REDIS_URL || 'redis://localhost:6379'
 var dbNum = process.env.REDIS_DB || 16
 
-var test = {}, socket0, socket1
+var test = {}, socket0, socket1, client
 var server = http.createServer(router)
-var client = redis.createClient(dbUrl)
-client.select(dbNum)
 
 function createSocketClient() {
-  return ioClient.connect('http://localhost:' + port, {
-    // 'reconnection delay': 0,
-    // 'reopen delay': 0,
-    // 'force new connection': true
+  var socket = ioClient.connect('http://localhost:' + port, {
+    'reconnection delay': 0,
+    'reopen delay': 0,
+    'force new connection': true
   })
+  socket.on('connect', function() {
+    console.log('Socket with id "' + socket.id + '" has connected');
+  })
+  return socket
 }
 
 test.module1 = tape({
   setup: function(t){
+    client = redis.createClient(dbUrl)
+    client.select(dbNum, function() {
+      console.log('Connected to Redis database number ' + dbNum);
+    })
+
     server.listen(port, function(){
       console.log("listening on port "+ port);
       sck.init(server, client);
@@ -35,8 +42,9 @@ test.module1 = tape({
   },
 
   teardown: function(t){
+    socket0.disconnect()
+    socket1.disconnect()
     client.end()
-    sck.kill()
     server.close()
     t.end()
   }
@@ -69,14 +77,14 @@ test.module1("test that messages are stored in the database", function(t){
 
   var time = new Date(Date.now()).toISOString();
 
-  var messageObj = {sender: 'sylvester', body: 'test message', time: time}
+  var messageObj = {sender: 'sylvester', room: 'room1', body: 'test message', time: time}
   var messageFromServer = {success: true, message: "Message stored"};
   socket0.emit("sendChat", messageObj)
   socket0.on("updateChat", function(response) {
     t.deepEqual(response, messageFromServer, "Listen for confirmation that the message has been stored")
   })
   socket1.on('updateChat', function(response) {
-    t.deepEqual(response, messageObj)
+    t.deepEqual(response, messageObj, "Assert other users in room get message object")
   })
 
   t.plan(2)

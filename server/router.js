@@ -3,27 +3,22 @@ var fs = require('fs');
 
 function router(req, res){
   var url = req.url;
-  console.log("urlsss" , url);
   if(url === "/"){
     // index page
     respondWithFile('/public/index.html', 'html', res);
-    console.log("jsjsjsjs");
 
   } else if(url.indexOf('.') > -1 && url.search('/public') === 0){
     // public resources
     var ext = req.url.split('.')[1];
     respondWithFile(req.url, ext, res);
-    console.log("ksjdbfajfbksdfhb");
 
-  } else if(url.indexOf("?username")>-1){
-    console.log(url);
+  } else if(url.indexOf("?username") > -1){
     respondWithFile('/public/chat.html','html',res);
-    console.log("you are serving a room");
-  }
-    else {
+    
+  } else {
     // 404
     respondWithFile('/public/404.html', 'html', res);
-    console.log("hehehehehe");
+
   }
 }
 

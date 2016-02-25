@@ -1,51 +1,47 @@
+var db = require("../server/db.js")
 
+module.exports = {
 
+  init: function(server, redisClient) {
 
-// console.log(sckt);
-// socket listener for user joining a room
+    var io = require('socket.io').listen(server);
 
+    io.on("connection", function(socket){
+      // Diagnostics
+      console.log('Socket with id "' + socket.id + '" has connected');
+      socket.on('disconnect', function() {
+        console.log('Socket with id "' + socket.id + '" has disconnected');
+      })
 
+      // User connection handler
+      socket.on("userJoin", function(data){
+        db.addUser(redisClient, data.username, data.room, function(msgHistory) {
+          io.sockets.in(socket.id).emit('messageHistory', msgHistory)
+        })
 
-// / newUser - when a new user joins
-function newUser(nickname, users, currRoom){
-  if( users[nickname] === undefined ) {
-    users[nickname] = {
-      "rooms": [currRoom]
-    };
+        socket.username = data.username
+        socket.room = data.room
+        socket.join(data.room)
+
+        // Get an array of active users in the current room
+        var ids = Object.keys(io.sockets.adapter.rooms[socket.room].sockets)
+        names = ids.map(id => io.sockets.connected[id].username)
+
+        // Have to use sockets.in instead because broadcast.to doesn't work??!!
+        io.sockets.in(data.room).emit("activeUsers", {
+          newUser: data.username,
+          room: data.room,
+          activeUsers: names,
+        })
+      })
+
+      // User message handler
+      socket.on('sendChat', function(data) {
+        db.addMessage(redisClient, data.sender, data.room, data.message, data.time, function() {
+          io.sockets.in(socket.id).emit('updateChat', {success: true, message: "Message stored"})
+        })
+        socket.broadcast.to(data.room).emit('updateChat', data)
+      })
+    })
   }
-  else {
-    users[nickname].rooms.push(currRoom);
-  }
-  return users;
 }
-
-
-
-module.exports = function(server) {
-  var sckt = require('socket.io')(server);
-  sckt.sockets.on("connection", function(socket){
-    socket.on('userJoin', function(nickname){
-      console.log(nickname);
-      var testMsgHist = JSON.stringify([
-            {
-                "originator":"bugs",
-                "body":"here is a message",
-                "time":"24-01-2016:12.123321321312"
-            },
-            {
-              "originator":"daffy",
-              "body":"here is a message2",
-              "time":"24-01-2016:12.123321321312"
-            },
-            {
-              "originator":"me",
-              "body":"here is not a message",
-              "time":"24-01-2016:12.123321321312"
-            }
-        ]);
-      var activeUsers = JSON.stringify(["dafyy","bugs","popeye"]);
-      socket.emit('msgHistory',testMsgHist);
-      socket.emit('activeUsers',activeUsers)
-    });
-  });
-};

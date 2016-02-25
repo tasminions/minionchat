@@ -23,12 +23,12 @@ socket.on('connect',function(){
     });
   });
 
-  socket.on('activeUsers',function(activeUsers){
+  socket.on('activeUsers',function(activeUsersObj){
     // reset the active users list
     var ulList = document.getElementById('activeUsers');
     ulList.innerHTML = "";
     // repopulate the active users list with all active users
-    var activeUsersArr = activeUsers;
+    var activeUsersArr = activeUsersObj.activeUsers;
     activeUsersArr.forEach(function(activeUser){
       var liNode = appendItemToList("activeUsers");
       var aNode = document.createElement('a');
@@ -43,14 +43,13 @@ socket.on('connect',function(){
   document.querySelector('form').addEventListener('submit', function(e){
     e.preventDefault();
     var messageObj = createMessageObj(username, room);
-    appendItemToList("allMessages").innerHTML = "Time: " + messageObj.time + " - " + messageObj.originator + " said: " + messageObj.body;
-
+    newMessage(messageObj);
     var chatObj = messageObj;
     socket.emit('sendChat', chatObj);
   });
   socket.on("updateChat", function(message){
-    // will update everyone's chat
-
+    console.log(message);
+    newMessage(message);
   });
 
   // // "TYPING EVENT" EMITTERS AND LISTENERS
@@ -77,8 +76,8 @@ function appendItemToList(list){
 }
 function createMessageObj(username, room){
   return {
-    "originator": username,
-    "body": document.getElementById('sendChat').value,
+    "sender": username,
+    "message": document.getElementById('sendChat').value,
     "time": Date.now(),
     "room": room
   };
@@ -88,6 +87,11 @@ function newChatUrl(currUser,otherUser){
   var urlPart1 = currUser < otherUser ? '/'+currUser+'&'+otherUser : '/'+otherUser+'&'+currUser;
   return urlPart1+'/?username='+currUser;
 }
+
+function newMessage(messageObject){
+  appendItemToList('allMessages').innerHTML = "Time: " + messageObject.time + " - " + messageObject.sender + " said: " + messageObject.message;
+}
+
 // var typing = false;
 // var timeout = undefined;
 //

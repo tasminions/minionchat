@@ -7,17 +7,21 @@ body {
 }
 
 h1 {
-
+  color: #355287;
 }
 ul {
   width:100%;
   list-style-type: none;
-  background-color:
 }
 
 a {
   text-decoration: none;
-  color:white;
+  color:#f9e7aa;
+}
+li {
+  padding: 1vh 0 1vh 2vw;
+  color: #355287;
+  font-size: 2em;
 }
 
 .error {
@@ -34,6 +38,7 @@ a {
   background-color: #aa913c;
   font-size: 2em;
   text-align: center;
+  z-index: 2;
 }
 
 .joinform {
@@ -89,15 +94,17 @@ textarea.username {
   width: 15%;
   height:50vw;
   background-color: #9aa8c3;
-  text-align: right;
   margin:0;
   padding:0;
-  color:white;
+  z-index: 2;
 }
 .main {
   position:absolute;
-  top:10vh;
+  bottom:20vh;
   width:85%;
+  height: 70vh;
+  overflow-y:scroll;
+  word-wrap: break-word;
 }
 .main li:nth-child(2n+1) {
   background-color: #f9e7aa;
@@ -111,6 +118,7 @@ textarea.username {
     position:fixed;
     bottom:0;
     width:100%;
+    z-index: 2;
 }
 textarea {
   resize: none;

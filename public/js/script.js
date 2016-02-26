@@ -19,6 +19,7 @@ socket.on('connect',function(){
     theme    = otherTheme(theme);
     document.URL = document.URL.replace(oldtheme,theme);
     provideThemeChangeLink( theme ,room, username );
+    setTimeout( function(){ scrollDown('main') }, 100 );
   });
   socket.emit('userJoin',connectionInfo);
   if(room !== "main"){

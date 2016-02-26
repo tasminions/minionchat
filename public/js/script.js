@@ -14,6 +14,10 @@ socket.on('connect',function(){
   document.getElementById('themeChange').addEventListener('click',function(e){
     e.preventDefault();
     changeCss(theme);
+    oldtheme = theme;
+    theme    = otherTheme(theme);
+    document.URL = document.URL.replace(oldtheme,theme);
+    provideThemeChangeLink( theme ,room, username );
   });
   socket.emit('userJoin',connectionInfo);
   if(room !== "main"){

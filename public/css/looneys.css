@@ -33,12 +33,10 @@ li:nth-child(odd) { background: green; }
 .topbar {
   position: fixed;
   top:0;
-  height:10%;
+  height:12.5vh;
   width:100%;
   float: left;
   /*background-color: rgba(211, 102, 81, 0.5)*/
-  font-size: 2em;
-  text-align: center;
   z-index: 2;
 }
 
@@ -68,19 +66,37 @@ input[type="text"].username {
 }
 
 .topleft {
-  width:85%;
-  height:inherit;
+  border: 3px solid purple;
+  width:15%;
+  height:12.5vh;
   float:left;
   margin:0;
   padding:0;
+  background-image: url('http://assets.skiptomylou.org/wp-content/uploads/2015/07/Minion-Eye.jpg');
+  background-size: 20% 100%;
+  background-repeat: no-repeat;
 }
-
+h1 {
+  display: inline;
+}
+.topcenter {
+  width:50%;
+  height:12.5vh;
+  float: left;
+  /*margin:0 auto;*/
+  padding:0;
+  border: 3px solid red;
+  font-size: 2em;
+  text-align: center;
+}
 .topright {
   width:15%;
-  height:inherit;
+  height:12.5vh;
   float:right;
   margin:0;
   padding:0;
+  background-image: url('http://www.wonderslist.com/wp-content/uploads/2015/01/Bugs-Bunny-Looney-Tunes-Characters.jpg');
+  background-size: 20% 100%;
   background-position: bottom right;
   background-color: rgba(0, 0, 0, 0.5);
 }

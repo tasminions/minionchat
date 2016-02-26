@@ -105,7 +105,6 @@ input[type="text"].username {
   padding:0;
   background-color: yellow;
   background-image: url('http://www.wonderslist.com/wp-content/uploads/2015/01/Bugs-Bunny-Looney-Tunes-Characters.jpg');
-  background-position: bottom right;
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
@@ -126,7 +125,6 @@ input[type="text"].username {
   padding:0;
   background-color: yellow;
   background-image: url('http://assets.skiptomylou.org/wp-content/uploads/2015/07/Minion-Eye.jpg');
-  background-position: bottom right;
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }

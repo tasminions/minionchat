@@ -3,10 +3,9 @@ var icon;
 
 socket.on('connect',function(){
   var urlParams = document.URL.split('/');
-  var username = urlParams[urlParams.length-1].replace('?username=','');
+  var username = urlParams[urlParams.length-1].replace('?username=','')
+  username = decodeURIComponent(username).replace(/\+/g," ")
   var room = urlParams[urlParams.length-2];
-  console.log(room);
-  console.log(username);
   var typing = false;
   var connectionInfo = {username:username, room:room};
   document.getElementById('roomName').innerHTML = room;
@@ -25,6 +24,7 @@ socket.on('connect',function(){
     var ulList = document.getElementById('allMessages');
     ulList.innerHTML = "";
     var msgHistoryArr =  msgHistory;
+    console.log(msgHistoryArr);
     msgHistoryArr.forEach( function( messageObj ){
       newMessage(messageObj)
     });
@@ -56,14 +56,6 @@ socket.on('connect',function(){
       scrollDown('main');
     }
   });
-
-  function addIcon(e){
-    icon = e.target.outerHTML
-    var messageObj = createMessageObj(username, room);
-    newMessage(messageObj);
-    var chatObj = messageObj;
-    socket.emit('sendChat', chatObj);
-  }
 
   var iconNames = document.getElementsByClassName('icon')
   for(i = 0; i < iconNames.length; i++) {
@@ -133,9 +125,10 @@ function newChatUrl(currUser,otherUser){
 }
 
 function newMessage(messageObject){
-  appendItemToList('allMessages').innerHTML = messageObject.time + " - " + messageObject.sender + " said: " + messageObject.message;
+  appendItemToList('allMessages').innerHTML = messageObject.time + " - " + "<span style='color:#91A2C1'>" + messageObject.sender + "</span> " + " said: " + messageObject.message;
   setTimeout( function(){ scrollDown("main") }, 100 );
 }
+
 function scrollDown(listClass){
   var div = document.getElementsByClassName(listClass)[0];
   div.scrollTop = div.scrollHeight;
@@ -148,4 +141,23 @@ function formatTime(date){
   var seconds = "0" + date.getSeconds();
   var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
   return formattedTime;
+}
+
+function toAscii(ascii){
+  var letters = [];
+  for(i=0, j=0; i<ascii.length, j<ascii.length/2; i+=2, j++){
+    var tmp1 = ascii.charAt(i);
+    var tmp2 = ascii.charAt(i+1);
+    letters[j]=parseInt(tmp1,16)*16+parseInt(tmp2,16);
+    letters[j]=String.fromCharCode(letters[j]);
+  }
+  return letters.join("");
+}
+
+function addIcon(e){
+  icon = e.target.outerHTML
+  var messageObj = createMessageObj(username, room);
+  newMessage(messageObj);
+  var chatObj = messageObj;
+  socket.emit('sendChat', chatObj);
 }

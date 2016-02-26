@@ -79,3 +79,16 @@ Real time web chat. See it on [heroku](http://minionchat.herokuapp.com/)!
 
 ## JS FILE STRUCTURE
 ![file-structure](assets/file-structure.jpg)
+
+## INSTRUCTIONS
+In order to get a chat room hosted on your machine, follow these instructions:
+* Setup a redis instance
+* Clone the repo
+* Run `npm install`
+* Create a `config.env` file with the following lines:
+  ```
+  REDIS_URL=reds://url/to/redis/server
+  REDIS_DB=[int]  # whichever database number you want to run
+  PORT=[int]  # whichever port you want to run
+  ```
+* Run `npm start` and navigate to `http://localhost:[PORT]`

@@ -14,8 +14,11 @@ function router(req, res){
       // public resources
       var ext = req.url.split('.')[1];
       respondWithFile(req.url, ext, res);
+  } else if ( url.indexOf("&") > -1 ){
+    var theme = url.split('/')[1];
+    respondWithFile('/public/'+theme+'Chat.html','html',res);
 
-  } else if(url.indexOf("?username") > -1){
+  } else if( ( url.indexOf("?username") > -1 ) && ( url.indexOf("&") === -1 ) ){
     var theme = url.split('/')[1];
     respondWithFile('/public/'+theme+'Chat.html','html',res);
 

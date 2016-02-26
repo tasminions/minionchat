@@ -7,12 +7,10 @@ height: 100%;
 width: 100%;
 font-family: 'Indie Flower', cursive;
 color: white;
-cursor: url("http://www.picgifs.com/cursors/cartoons/looney-tunes/animaatjes_looney_tunes_icon8.gif"), auto;
 }
 .container{
   background-image: url("http://www.ux-designstudio.com/share/TheRoadRunner2.jpg");
   background-size: 100% 100%;
-
   font-size: 15px;
   height: 100%;
   width: 100%;
@@ -21,19 +19,22 @@ cursor: url("http://www.picgifs.com/cursors/cartoons/looney-tunes/animaatjes_loo
 /**/
 
 ul{
-  width:100%;
+  width:101%;
+  margin-left: -5%;
   list-style-type: none;
 }
 li{
     padding: 1vh 0 1vh 2vw;
     font-size: 2em;
-    background-color: red;
+    background-color: rgba(96, 49, 40, 0.18);;
 }
-li:nth-child(odd) { background: green; }
+li:nth-child(odd) {
+}
+
 .topbar {
   position: fixed;
   top:0;
-  height:12.5vh;
+  height:100%;
   width:100%;
   float: left;
   /*background-color: rgba(211, 102, 81, 0.5)*/
@@ -48,7 +49,16 @@ li:nth-child(odd) { background: green; }
   background-color: rgba(211, 102, 81, 0.5);
   height: 20vh;
 }
-
+#sendChat{
+  color: white;
+  background: black;
+  width: 84%;
+  overflow-y: scroll;
+  border: 0;
+  font-family: cursive;
+  font-size: 1.5em;
+  margin-left: 1%;
+}
 
 input[type="text"].username {
   margin: 3vh 0 3vh 2%;
@@ -62,22 +72,22 @@ input[type="text"].username {
   float:left;
   padding:0;
   width:70%;
-  background-color: rgba(211, 102, 81, 0.5);
+
 }
 
 .topleft {
-  border: 3px solid purple;
-  width:15%;
-  height:12.5vh;
-  float:left;
-  margin:0;
-  padding:0;
-  background-image: url('http://assets.skiptomylou.org/wp-content/uploads/2015/07/Minion-Eye.jpg');
-  background-size: 20% 100%;
-  background-repeat: no-repeat;
+    width: 21%;
+    height: 16%;
+    float: left;
+    margin: 7% 0 0 0;
+    padding: 0;
+    background-image: url('https://cdn2.iconfinder.com/data/icons/despicable-me-2-minions/128/superman-minion-icon.png');
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
 }
 h1 {
   display: inline;
+  text-transform: uppercase;
 }
 .topcenter {
   width:50%;
@@ -85,7 +95,8 @@ h1 {
   float: left;
   /*margin:0 auto;*/
   padding:0;
-  border: 3px solid red;
+  margin: 1% 2%;
+
   font-size: 2em;
   text-align: center;
 }
@@ -95,10 +106,11 @@ h1 {
   float:right;
   margin:0;
   padding:0;
-  background-image: url('http://www.wonderslist.com/wp-content/uploads/2015/01/Bugs-Bunny-Looney-Tunes-Characters.jpg');
-  background-size: 20% 100%;
+  background-image: url('http://webcreationsbyjumpy.com/comics/comics_graphics/roadrunner/images/runner021.png');
+  background-repeat: no-repeat;
+  margin-right: 3%;
+  background-size: 50% 100%;
   background-position: bottom right;
-  background-color: rgba(0, 0, 0, 0.5);
 }
 .sidebar {
   position:fixed;
@@ -117,6 +129,7 @@ h1 {
   width:85%;
   height: 75%;
   overflow-y:scroll;
+  overflow-x: hidden;
   word-wrap: break-word;
 }
 .main li:nth-child(2n+1) {
@@ -154,9 +167,6 @@ li {
   height: 100%
 }
 
-.topleft, .main {
-  width:85%;
-}
 .sidebar, .topright {
   width:15%;
 }
@@ -470,3 +480,22 @@ animation-fill-mode: both;
 
 
 }
+
+@-webkit-keyframes roadrunner {
+0%, {-webkit-transform: translatex(0%)  ;}
+50% {-webkit-transform: translateX(-500%)  rotateY(180deg) ;}
+100% {-webkit-transform: translateX(0%);}
+}
+.topright {
+  -webkit-animation-name: roadrunner;
+  animation-name: roadrunner;
+  -webkit-animation-duration: 5s;
+  animation-duration: 5s;
+  -webkit-transition-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite
+  animation-timing-function: linear;
+  transition-timing-function: linear;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  }

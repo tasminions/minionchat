@@ -1,4 +1,5 @@
 var socket = io.connect();
+var icon;
 
 socket.on('connect',function(){
   var urlParams = document.URL.replace('://','').split('/');
@@ -64,6 +65,19 @@ socket.on('connect',function(){
     }
   });
 
+  function addIcon(e){
+    icon = e.target.outerHTML
+    var messageObj = createMessageObj(username, room);
+    newMessage(messageObj);
+    var chatObj = messageObj;
+    socket.emit('sendChat', chatObj);
+  }
+
+  var iconNames = document.getElementsByClassName('icon')
+  for(i = 0; i < iconNames.length; i++) {
+    iconNames[i].addEventListener("click", addIcon)
+  }
+
   document.querySelector('form').addEventListener('submit', function(e){
     e.preventDefault();
     var messageObj = createMessageObj(username, room);
@@ -113,7 +127,7 @@ function appendItemToList(list){
 function createMessageObj(username, room){
   return {
     "sender": username,
-    "message": document.getElementById('sendChat').value,
+    "message": document.getElementById('sendChat').value || icon,
     "time": formatTime(Date.now()),
     "room": room
   }; //

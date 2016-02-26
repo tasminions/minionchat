@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>MinionChat</title>
     <link rel="stylesheet" href="/public/css/style.css" media="screen" title="no title" charset="utf-8">
+
   </head>
   <body>
     <div class="topbar">
@@ -20,8 +21,17 @@
       <ul id="allMessages"> </ul>
     </div>
     <div class="bottombar">
+      <div class="emojis">
+        <ul class="icons">
+          <li ><img class="icon" src="http://icons.iconarchive.com/icons/designbolts/despicable-me-2/64/Minion-Shy-icon.png" alt="shy-minion" /></li>
+          <li ><img class="icon" src="http://icons.iconarchive.com/icons/designbolts/despicable-me-2/64/Minion-Happy-icon.png" alt="happy-minion" /></li>
+          <li ><img class="icon" src="http://icons.iconarchive.com/icons/designbolts/despicable-me-2/64/Minion-Sad-icon.png" alt="sad-minion" /></li>
+          <li ><img class="icon" src="http://icons.iconarchive.com/icons/designbolts/despicable-me-2/64/Minion-Amazed-icon.png" alt="amazed-minion" /></li>
+          <li ><img class="icon" src="http://icons.iconarchive.com/icons/designbolts/despicable-me-2/72/Minion-Evil-icon.png" alt="evil-minion" /></li>
+        </ul>
+      </div>
       <form id="chatBox">
-        <input type="text" id="sendChat" rows="5" columns="50" placeholder="Type your message here" required autofocus/>
+        <input autocomplete="off" type="text" id="sendChat" rows="5" columns="50" placeholder="Type your message here" required autofocus/>
         <input type="submit" class="submit-btn" value="SEND"/>
       </form>
     </div>

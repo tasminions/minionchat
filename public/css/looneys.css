@@ -17,18 +17,24 @@ color: white;
 }
 
 /**/
-li a{
+
+a{
   text-decoration: none;
 }
+.sidebar li a{
+  color:white;
+}
+
 ul{
   width:101%;
   margin-left: -5%;
   list-style-type: none;
 }
-li{
+li {
     padding: 1vh 0 1vh 2vw;
     font-size: 2em;
     background-color: rgba(96, 49, 40, 0.18);;
+
 }
 li:nth-child(odd) {
 }
@@ -56,6 +62,7 @@ li:nth-child(odd) {
   background: black;
   width: 84%;
   overflow-y: scroll;
+
   border: 0;
   font-family: cursive;
   font-size: 1.5em;
@@ -130,7 +137,7 @@ h1 {
   bottom:12.5%;
   width:85%;
   height: 75%;
-  overflow-y:scroll;
+  overflow-y: scroll;
   overflow-x: hidden;
   word-wrap: break-word;
 }
@@ -182,6 +189,7 @@ input[type="submit"] {
 textarea {
   font-size: 1.5em;
 }
+
 
 .emojis {
   display: none;

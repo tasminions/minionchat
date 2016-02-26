@@ -171,7 +171,6 @@ input[type="text"].username {
   width:70%;
   height: 16vh;
   font-size: 2em;
-  overflow-x: scroll;
   background-color: #f9e7aa;
   color:#355287;
 }

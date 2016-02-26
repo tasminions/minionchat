@@ -7,6 +7,7 @@ height: 100%;
 width: 100%;
 font-family: 'Indie Flower', cursive;
 color: white;
+cursor: url("http://www.picgifs.com/cursors/cartoons/looney-tunes/animaatjes_looney_tunes_icon8.gif"), auto;
 }
 .container{
   background-image: url("http://www.ux-designstudio.com/share/TheRoadRunner2.jpg");
@@ -146,6 +147,9 @@ li {
 
 input[type="submit"] {
   font-size: 2em;
+  font-family: 'Indie Flower', cursive;
+  margin-top: 2%;
+  margin-left: 2%;
 }
 textarea {
   font-size: 1.5em;

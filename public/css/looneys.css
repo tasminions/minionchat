@@ -17,8 +17,11 @@ color: white;
 }
 
 /**/
-li a{
+a{
   text-decoration: none;
+}
+.sidebar li a{
+  color:white;
 }
 ul{
   width:101%;
@@ -28,7 +31,6 @@ ul{
 li{
     padding: 1vh 0 1vh 2vw;
     font-size: 2em;
-    background-color: rgba(96, 49, 40, 0.18);;
 }
 li:nth-child(odd) {
 }

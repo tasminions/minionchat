@@ -57,7 +57,7 @@ module.exports = {
           room: data.room,
           url: url
         })
-      })
+      });
       socket.on("userTyping", function(data){
         socket.broadcast.to(data.room).emit("userTyping", data)
       })

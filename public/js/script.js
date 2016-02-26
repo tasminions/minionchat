@@ -12,6 +12,7 @@ socket.on('connect',function(){
 
   provideThemeChangeLink(theme,room,username);
   document.getElementById('themeChange').addEventListener('click',function(e){
+    // do not refresh please
     e.preventDefault();
     changeCss(theme);
     oldtheme = theme;
@@ -47,7 +48,7 @@ socket.on('connect',function(){
       if(activeUser !== username){
         var liNode = appendItemToList("activeUsers");
         var aNode = document.createElement('a');
-        aNode.href = newChatUrl(username,activeUser);
+        aNode.href = newChatUrl(theme,username,activeUser);
         aNode.target = '_blank';
         liNode.appendChild(aNode);
         aNode.innerHTML = activeUser;
@@ -74,7 +75,7 @@ socket.on('connect',function(){
     newMessage(message);
   });
   socket.on("newRoom", function(roomInvitation){
-    appendItemToList("allMessages").innerHTML = "<a href=" + roomInvitation.url +" target='_blank'>" + roomInvitation.sourceUser + " has invited you to chat privately. </a>";
+    appendItemToList("allMessages").innerHTML = "<a  target='_blank' href='/" +theme+ roomInvitation.url +"''>" + roomInvitation.sourceUser + " has invited you to chat privately. </a>";
   })
 
 
@@ -117,9 +118,9 @@ function createMessageObj(username, room){
   }; //
 }
 // create a two-way chat url based on alphabetical order
-function newChatUrl(currUser,otherUser){
+function newChatUrl(theme,currUser,otherUser){
   var urlPart1 = currUser < otherUser ? '/'+currUser+'&'+otherUser : '/'+otherUser+'&'+currUser;
-  return urlPart1+'/?username='+currUser;
+  return "/" +theme+urlPart1+'/?username='+currUser;
 }
 
 function newMessage(messageObject){

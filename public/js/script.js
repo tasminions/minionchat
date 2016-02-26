@@ -75,7 +75,7 @@ socket.on('connect',function(){
     newMessage(message);
   });
   socket.on("newRoom", function(roomInvitation){
-    appendItemToList("allMessages").innerHTML = "<a href=" +theme+'/'+ roomInvitation.url +" target='_blank'>" + roomInvitation.sourceUser + " has invited you to chat privately. </a>";
+    appendItemToList("allMessages").innerHTML = "<a  target='_blank' href='/" +theme+ roomInvitation.url +"''>" + roomInvitation.sourceUser + " has invited you to chat privately. </a>";
   })
 
 
@@ -120,7 +120,7 @@ function createMessageObj(username, room){
 // create a two-way chat url based on alphabetical order
 function newChatUrl(theme,currUser,otherUser){
   var urlPart1 = currUser < otherUser ? '/'+currUser+'&'+otherUser : '/'+otherUser+'&'+currUser;
-  return theme+urlPart1+'/?username='+currUser;
+  return "/" +theme+urlPart1+'/?username='+currUser;
 }
 
 function newMessage(messageObject){

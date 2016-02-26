@@ -17,7 +17,9 @@ color: white;
 }
 
 /**/
-
+li a{
+  text-decoration: none;
+}
 ul{
   width:101%;
   margin-left: -5%;
@@ -361,43 +363,6 @@ animation-fill-mode: both;
   }
 @-webkit-keyframes fadeout {
 0% { opacity: 1;}
-2% {opacity: 1;}
-4% { opacity: 1 ;}
-6% {opacity: 1;}
-8% {opacity: 1;}
-10% {opacity: 1 ;}
-12% {opacity: 1 ;}
-14% {opacity: 1 ;}
-16% {opacity: 1 ;}
-17% {opacity: 1 ;}
-18% {opacity: 1 ;}
-20% {opacity: 1 ;}
-22% {opacity: 1 ;}
-24% {opacity: 1 ;}
-26% {opacity: 1 ;}
-28% {opacity: 1;}
-30% {opacity: 1 ;}
-32% {opacity: 1 ;}
-34% {opacity: 1 ;}
-36% {opacity: 1 ;}
-38% {opacity: 1 ;}
-40% {opacity: 1 ;}
-44% {opacity: 1 ;}
-46% {opacity: 1 ;}
-48% {opacity: 1 ;}
-50% {opacity: 1 ;}
-52% {opacity: 1 ;}
-54% {opacity: 1 ;}
-56% {opacity: 1 ;}
-58% {opacity: 1 ;}
-60% {opacity: 1 ;}
-62% {opacity: 1 ;}
-64% {opacity: 1 ;}
-66% {opacity: 1 ;}
-68% {opacity: 1 ;}
-70% {opacity: 1 ;}
-72% {opacity: 1 ;}
-74% {opacity: 1 ;}
 76% {opacity: 1 ;}
 78% {opacity: 0.9 ;}
 80% {opacity: 0.7 ;}
@@ -427,43 +392,6 @@ animation-fill-mode: both;
 }
 @-webkit-keyframes fade {
 0% { opacity: 0;}
-2% {opacity: 0;}
-4% { opacity: 0 ;}
-6% {opacity: 0;}
-8% {opacity: 0;}
-10% {opacity: 0 ;}
-12% {opacity: 0 ;}
-14% {opacity: 0 ;}
-16% {opacity: 0 ;}
-17% {opacity: 0 ;}
-18% {opacity: 0 ;}
-20% {opacity: 0 ;}
-22% {opacity: 0 ;}
-24% {opacity: 0 ;}
-26% {opacity: 0 ;}
-28% {opacity: 0 ;}
-30% {opacity: 0 ;}
-32% {opacity: 0 ;}
-34% {opacity: 0 ;}
-36% {opacity: 0 ;}
-38% {opacity: 0 ;}
-40% {opacity: 0 ;}
-44% {opacity: 0 ;}
-46% {opacity: 0 ;}
-48% {opacity: 0 ;}
-50% {opacity: 0 ;}
-52% {opacity: 0 ;}
-54% {opacity: 0 ;}
-56% {opacity: 0 ;}
-58% {opacity: 0 ;}
-60% {opacity: 0 ;}
-62% {opacity: 0 ;}
-64% {opacity: 0 ;}
-66% {opacity: 0 ;}
-68% {opacity: 0 ;}
-70% {opacity: 0 ;}
-72% {opacity: 0 ;}
-74% {opacity: 0 ;}
 76% {opacity: 0 ;}
 78% {opacity: 0.1 ;}
 80% {opacity: 0.3 ;}
@@ -474,8 +402,6 @@ animation-fill-mode: both;
 90% {opacity: 0.8 ;}
 92% {opacity: 0.9 ;}
 94% {opacity: 1 ;}
-96% {opacity: 1 ;}
-98% {opacity: 1 ;}
 100% {opacity: 1 ;}
 
 

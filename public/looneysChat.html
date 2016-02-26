@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title>MinionChat</title>
-    <link rel="stylesheet" href="/public/css/style.css" media="screen" title="no title" charset="utf-8">
-
+    <link rel="stylesheet" href="/public/css/looneys.css">
   </head>
   <body>
+    <div class="container">
     <div class="topbar">
-      <div class="topleft"> </div>
+      <a id="themeChange" class="topleft"></a>
       <div class="topcenter">
         <h1 id="roomName"> </h1>
       </div>
@@ -31,7 +31,7 @@
         </ul>
       </div>
       <form id="chatBox">
-        <input autocomplete="off" type="text" id="sendChat" rows="5" columns="50" placeholder="Type your message here" required autofocus/>
+        <input type="text" id="sendChat" rows="5" columns="50" placeholder="Type your message here" required autofocus/>
         <input type="submit" class="submit-btn" value="SEND"/>
       </form>
     </div>

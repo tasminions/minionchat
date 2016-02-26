@@ -5,7 +5,7 @@
 [![Codecrystal](https://img.shields.io/badge/code-crystal-5CB3FF.svg)](http://codecrystal.herokuapp.com/crystalise/tasminions/minionchat/master)
 
 # minionchat
-Real time web chat
+Real time web chat. See it on [heroku](http://minionchat.herokuapp.com/)!
 
 ## WIREFRAMES
 ![chat-wireframe](assets/chat-wireframe.jpg)

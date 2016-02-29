@@ -7,7 +7,10 @@ socket.on('connect',function(){
   var theme = urlParams[0];
   var room = urlParams[1];
   var username = urlParams[2].replace('?username=','');
-
+  username = decodeURIComponent(username.replace(/\+/g," "))
+  console.log(username);
+  console.log(decodeURIComponent("_ _"));
+  console.log(decodeURIComponent("_    _"));
   var connectionInfo = {username:username, room:room};
   document.getElementById('roomName').innerHTML = room;
 
@@ -35,6 +38,7 @@ socket.on('connect',function(){
     var ulList = document.getElementById('allMessages');
     ulList.innerHTML = "";
     var msgHistoryArr =  msgHistory;
+    console.log(msgHistoryArr);
     msgHistoryArr.forEach( function( messageObj ){
       newMessage(messageObj)
     });
@@ -64,14 +68,6 @@ socket.on('connect',function(){
       scrollDown('main');
     }
   });
-
-  function addIcon(e){
-    icon = e.target.outerHTML
-    var messageObj = createMessageObj(username, room);
-    newMessage(messageObj);
-    var chatObj = messageObj;
-    socket.emit('sendChat', chatObj);
-  }
 
   var iconNames = document.getElementsByClassName('icon')
   for(i = 0; i < iconNames.length; i++) {
@@ -139,9 +135,10 @@ function newChatUrl(theme,currUser,otherUser){
 }
 
 function newMessage(messageObject){
-  appendItemToList('allMessages').innerHTML = messageObject.time + " - " + messageObject.sender + " said: " + messageObject.message;
+  appendItemToList('allMessages').innerHTML = messageObject.time + " - " + "<span style='color:#91A2C1'>" + messageObject.sender + "</span> " + " said: " + messageObject.message;
   setTimeout( function(){ scrollDown("main") }, 100 );
 }
+
 function scrollDown(listClass){
   var div = document.getElementsByClassName(listClass)[0];
   div.scrollTop = div.scrollHeight;
@@ -155,6 +152,15 @@ function formatTime(date){
   var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
   return formattedTime;
 }
+
+function addIcon(e){
+  icon = e.target.outerHTML
+  var messageObj = createMessageObj(username, room);
+  newMessage(messageObj);
+  var chatObj = messageObj;
+  socket.emit('sendChat', chatObj);
+}
+
 function otherTheme(currTheme){
   return currTheme === 'minions' ? 'looneys':'minions';
 }
